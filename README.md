@@ -6,17 +6,10 @@ Add borders to your Polygon2Ds. Useful for creating maps using textures.
 
 ## Usage
 
-Add the script to a node in your scene and connect to the [signals](#signals).
-There are many [options available](#options-exported-variables) to customize Swipe Detector's behavior.
-
-When swipe is detected, you will receive a `SwipeGesture` object with all
-the gesture information. This includes `points` conforming the gesture
-and `duration` of the swipe. [Read more](#swipegesture)
-
-You can set patterns for automatic detection (experimental), see [Working With Patterns](#working-with-patterns).
-
-You can get the history of all gestures through `history()` method on swipe
-detector.
+Create a `BorderedPolygon2D` node and attach a texture and border texures. You
+might need to use options to proper align/rotate/scale texture. If you want
+differnt textures for each polygon face you will need to attach a tileset with
+each border textures.
 
 ### Examples
 
