@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://examples/basic/water.png" type="Texture" id=1]
+[ext_resource path="res://examples/basic/grass.png" type="Texture" id=2]
+[ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=3]
+[ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=4]
+[ext_resource path="res://examples/basic/sand_transition.png" type="Texture" id=5]
+
+[node name="BasicTransitionExample" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+polygon = Vector2Array( -145.221, -92.8317, 1209.43, -92.8317, 1200.18, 747.349, -156.324, 751.05 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 1 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
+[node name="BorderedPolygon2D" type="Polygon2D" parent="."]
+
+transform/pos = Vector2( 2.00002, 0 )
+polygon = Vector2Array( 256.363, 312.454, 237.857, 216.221, 263.766, 147.749, 363.699, 112.587, 465.483, 123.691, 541.359, 182.91, 556.163, 264.338, 600.578, 345.765, 663.252, 370.433, 711.646, 453.461, 614.654, 519.758, 509.069, 502.57, 478.438, 440.146, 400.712, 401.283, 280.421, 360.57 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 2 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 3 )
+__meta__ = { "_editor_icon":ExtResource( 4 ) }
+border_size = 64
+border_overlap = 32
+border_textures = null
+border_clockwise_shift = 0
+border_texture = ExtResource( 5 )
+border_texture_scale = Vector2( 0.25, 0.25 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 0.0
+
+

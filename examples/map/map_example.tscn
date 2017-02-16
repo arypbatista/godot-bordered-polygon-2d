@@ -1,0 +1,203 @@
+[gd_scene load_steps=13 format=1]
+
+[ext_resource path="res://examples/map/tiles/tile136.png" type="Texture" id=1]
+[ext_resource path="res://examples/map/tiles/tile016.png" type="Texture" id=2]
+[ext_resource path="res://examples/map/tiles/tile084.png" type="Texture" id=3]
+[ext_resource path="res://examples/map/tiles/tile118.png" type="Texture" id=4]
+[ext_resource path="res://examples/map/tiles/tile101.png" type="Texture" id=5]
+[ext_resource path="res://examples/map/tiles/tile099.png" type="Texture" id=6]
+[ext_resource path="res://examples/map/tiles/tile116.png" type="Texture" id=7]
+[ext_resource path="res://examples/map/tiles/tile049.png" type="Texture" id=8]
+[ext_resource path="res://examples/map/tiles/tile028.png" type="Texture" id=9]
+[ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=10]
+[ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=11]
+[ext_resource path="res://examples/map/border_tileset.tres" type="TileSet" id=12]
+
+[node name="MapExample" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+polygon = Vector2Array( -320, -192, 1344, -192, 1344, 832, -320, 832 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 1 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
+[node name="Sprite1" type="Sprite" parent="."]
+
+transform/pos = Vector2( 544, 120 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 392, 496 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 592, 328 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+
+[node name="Sprite14" type="Sprite" parent="."]
+
+transform/pos = Vector2( 376, 72 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+
+[node name="Sprite10" type="Sprite" parent="."]
+
+transform/pos = Vector2( 400, 88 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite13" type="Sprite" parent="."]
+
+transform/pos = Vector2( 368, 88 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+
+[node name="Sprite11" type="Sprite" parent="."]
+
+transform/pos = Vector2( 400, 112 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+flip_h = true
+
+[node name="Sprite9" type="Sprite" parent="."]
+
+transform/pos = Vector2( 344, 88 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+flip_h = true
+
+[node name="Sprite7" type="Sprite" parent="."]
+
+transform/pos = Vector2( 336, 112 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 5 )
+
+[node name="Sprite12" type="Sprite" parent="."]
+
+transform/pos = Vector2( 432, 104 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite8" type="Sprite" parent="."]
+
+transform/pos = Vector2( 376, 104 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 584, 120 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 6 )
+
+[node name="Sprite5" type="Sprite" parent="."]
+
+transform/pos = Vector2( 152, 464 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 6 )
+
+[node name="Sprite6" type="Sprite" parent="."]
+
+transform/pos = Vector2( 408, 496 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 7 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 376, 120 )
+transform/scale = Vector2( 4, 4 )
+texture = ExtResource( 8 )
+region = true
+region_rect = Rect2( 0, 0, 64, 16 )
+
+[node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
+
+transform/pos = Vector2( -8, -12 )
+polygon = Vector2Array( 256, 192, 704, 192, 764, 204, 832, 180, 824, 212, 800, 236, 756, 252, 716, 260, 548, 228, 388, 236, 324, 284, 276, 348, 164, 340, 156, 268, 188, 220 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 9 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 10 )
+__meta__ = { "_editor_icon":ExtResource( 11 ) }
+border_size = 64
+border_overlap = 32
+border_textures = ExtResource( 12 )
+border_clockwise_shift = 0
+border_texture = null
+border_texture_scale = Vector2( 4, 4 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 180.0
+
+[node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
+
+transform/pos = Vector2( -12, -12 )
+polygon = Vector2Array( 564, 452, 612, 460, 708, 452, 780, 452, 836, 412, 812, 372, 732, 396, 660, 404, 580, 396, 556, 412 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 9 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 10 )
+__meta__ = { "_editor_icon":ExtResource( 11 ) }
+border_size = 64
+border_overlap = 32
+border_textures = ExtResource( 12 )
+border_clockwise_shift = 2
+border_texture = null
+border_texture_scale = Vector2( 4, 4 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 180.0
+
+[node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
+
+transform/pos = Vector2( -16, -8 )
+polygon = Vector2Array( 92, 660, 44, 588, 68, 540, 204, 532, 428, 564, 684, 564, 836, 548, 956, 540, 1068, 508, 1092, 588, 1084, 668 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 9 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 10 )
+__meta__ = { "_editor_icon":ExtResource( 11 ) }
+border_size = 64
+border_overlap = 32
+border_textures = ExtResource( 12 )
+border_clockwise_shift = 0
+border_texture = null
+border_texture_scale = Vector2( 4, 4 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 180.0
+
+

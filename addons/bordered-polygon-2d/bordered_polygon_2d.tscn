@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://nodes/masking/BorderedPolygon2D.tres.gd" type="Script" id=1]
+
+[node name="BorderedPolygon2D" type="Polygon2D"]
+
+polygon = Vector2Array(  )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 1 )
+borderSize = 50
+borderOverlap = 25
+borderTextures = null
+border_clockwise_shift = 0
+borderTexture = null
+textureScale = Vector2( 1, 1 )
+textureOffset = Vector2( 0, 0 )
+textureRotation = 0.0
+
+

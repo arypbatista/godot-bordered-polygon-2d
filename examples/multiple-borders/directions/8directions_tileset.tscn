@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile000.png" type="Texture" id=1]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile001.png" type="Texture" id=2]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile002.png" type="Texture" id=3]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile003.png" type="Texture" id=4]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile004.png" type="Texture" id=5]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile005.png" type="Texture" id=6]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile006.png" type="Texture" id=7]
+[ext_resource path="res://examples/multiple-borders/directions/tiles/tile007.png" type="Texture" id=8]
+
+[node name="8DirectionsTileset" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 96, 32 )
+texture = ExtResource( 1 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 160, 32 )
+texture = ExtResource( 2 )
+
+[node name="Sprite1" type="Sprite" parent="."]
+
+transform/pos = Vector2( 160, 96 )
+texture = ExtResource( 3 )
+
+[node name="Sprite5" type="Sprite" parent="."]
+
+transform/pos = Vector2( 160, 160 )
+texture = ExtResource( 4 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 96, 160 )
+transform/scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
+[node name="Sprite6" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 160 )
+transform/scale = Vector2( 1, 1 )
+texture = ExtResource( 6 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 96 )
+texture = ExtResource( 7 )
+
+[node name="Sprite7" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 32 )
+texture = ExtResource( 8 )
+
+
