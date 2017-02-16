@@ -29,95 +29,95 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 
-[node name="Sprite1" type="Sprite" parent="."]
+[node name="Sign" type="Sprite" parent="."]
 
 transform/pos = Vector2( 544, 120 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sign 2" type="Sprite" parent="."]
 
 transform/pos = Vector2( 392, 496 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 
-[node name="Sprite2" type="Sprite" parent="."]
+[node name="Treasure" type="Sprite" parent="."]
 
 transform/pos = Vector2( 592, 328 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 
-[node name="Sprite14" type="Sprite" parent="."]
+[node name="Rock" type="Sprite" parent="."]
 
 transform/pos = Vector2( 376, 72 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 
-[node name="Sprite10" type="Sprite" parent="."]
+[node name="Rock 2" type="Sprite" parent="."]
 
 transform/pos = Vector2( 400, 88 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Sprite13" type="Sprite" parent="."]
+[node name="Rock 3" type="Sprite" parent="."]
 
 transform/pos = Vector2( 368, 88 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 
-[node name="Sprite11" type="Sprite" parent="."]
+[node name="Rock 4" type="Sprite" parent="."]
 
 transform/pos = Vector2( 400, 112 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 flip_h = true
 
-[node name="Sprite9" type="Sprite" parent="."]
+[node name="Rock 5" type="Sprite" parent="."]
 
 transform/pos = Vector2( 344, 88 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 flip_h = true
 
-[node name="Sprite7" type="Sprite" parent="."]
+[node name="Rock 6" type="Sprite" parent="."]
 
 transform/pos = Vector2( 336, 112 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 5 )
 
-[node name="Sprite12" type="Sprite" parent="."]
+[node name="Rock 7" type="Sprite" parent="."]
 
 transform/pos = Vector2( 432, 104 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Sprite8" type="Sprite" parent="."]
+[node name="Rock 8" type="Sprite" parent="."]
 
 transform/pos = Vector2( 376, 104 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 
-[node name="Sprite4" type="Sprite" parent="."]
+[node name="Flower" type="Sprite" parent="."]
 
 transform/pos = Vector2( 584, 120 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 6 )
 
-[node name="Sprite5" type="Sprite" parent="."]
+[node name="Flower 2" type="Sprite" parent="."]
 
 transform/pos = Vector2( 152, 464 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 6 )
 
-[node name="Sprite6" type="Sprite" parent="."]
+[node name="Flower 3" type="Sprite" parent="."]
 
 transform/pos = Vector2( 408, 496 )
 transform/scale = Vector2( 4, 4 )
 texture = ExtResource( 7 )
 
-[node name="Sprite3" type="Sprite" parent="."]
+[node name="Fence" type="Sprite" parent="."]
 
 transform/pos = Vector2( 376, 120 )
 transform/scale = Vector2( 4, 4 )
@@ -140,7 +140,7 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
 border_overlap = 32
 border_textures = ExtResource( 12 )

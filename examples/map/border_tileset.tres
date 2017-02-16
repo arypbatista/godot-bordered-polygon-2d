@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" load_steps=5 format=1]
 
-[ext_resource path="res://examples/map/tiles/tile008.png" type="Texture" id=1]
+[ext_resource path="res://examples/map/tiles/tile_up.png" type="Texture" id=1]
 [ext_resource path="res://examples/map/tiles/tile_side.png" type="Texture" id=2]
-[ext_resource path="res://examples/map/tiles/tile011.png" type="Texture" id=3]
+[ext_resource path="res://examples/map/tiles/tile_bottom.png" type="Texture" id=3]
 [ext_resource path="res://examples/map/tiles/tile_side_2.png" type="Texture" id=4]
 
 [resource]
