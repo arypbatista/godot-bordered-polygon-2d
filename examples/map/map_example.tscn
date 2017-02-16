@@ -148,7 +148,7 @@ border_clockwise_shift = 0
 border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 180.0
+border_texture_rotation = 0.0
 
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
 
@@ -173,7 +173,7 @@ border_clockwise_shift = 2
 border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 180.0
+border_texture_rotation = 0.0
 
 [node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
 
@@ -198,6 +198,6 @@ border_clockwise_shift = 0
 border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 180.0
+border_texture_rotation = 0.0
 
 

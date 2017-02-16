@@ -5,8 +5,6 @@
 [ext_resource path="res://examples/multiple-borders/directions/4direction_tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://examples/multiple-borders/directions/8directions_tileset.tres" type="TileSet" id=4]
 
-
-
 [node name="MultipleBordersExample" type="Node2D"]
 
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
@@ -35,7 +33,6 @@ border_texture_rotation = 0.0
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
-transform/scale = Vector2( 1, 1 )
 polygon = Vector2Array( 480, 192, 576, 96, 736, 96, 832, 192, 832, 352, 736, 448, 576, 448, 480, 352 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )

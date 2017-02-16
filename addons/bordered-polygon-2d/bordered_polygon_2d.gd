@@ -197,7 +197,7 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 		set_tileset_texture(border, border_textures)
 	else:
 		border.set_texture(border_texture)
-	border.set_texture_rotation(deg2rad(border_texture_rotation))
+	border.set_texture_rotation(deg2rad(border_texture_rotation) + PI)
 	border.set_texture_scale(invert_scale(border_texture_scale))
 	return border
 
