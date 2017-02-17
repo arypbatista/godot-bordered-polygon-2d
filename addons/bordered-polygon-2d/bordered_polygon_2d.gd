@@ -27,15 +27,18 @@ export (TileSet) var border_textures setget set_border_textures
 # Border textures will be rotated clock wise to the left
 export (int) var border_clockwise_shift = 0 setget set_border_clockwise_shift
 
-export(Texture) var border_texture setget set_border_texture
-export(Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
-export(Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
-export(float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
+export (Texture) var border_texture setget set_border_texture
+export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
+export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
+export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
+export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
 
 const QUAD_TOP_1    = 1
 const QUAD_TOP_2    = 0
 const QUAD_BOTTOM_1 = 3
 const QUAD_BOTTOM_2 = 2
+
+var innerBorder = []
 
 
 onready var _is_ready = true
@@ -84,39 +87,96 @@ func set_border_textures(value):
 func set_border_clockwise_shift(value):
 	border_clockwise_shift = value
 	update()
+	
+func set_smooth_level(value):
+	smooth_level = value
+	print('Set smooth level to ', value)
+	update()
 
+func get_max_angle_smooth():
+	return PI/2 * (1.0 - smooth_level)
+	
+func smooth_shape_points(shape_points, max_degree):	
+	max_degree = abs(max_degree)
+	for i in range(5): # max passes 
+		var point_to_smooth = []
+		var angles_smoothed_this_round = 0
+		var current_shape_size = shape_points.size()
+		
+		for i in range(shape_points.size()):
+			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
+			var b = shape_points[i]
+			var c = shape_points[(i + 1) % current_shape_size]
+			
+			var subtract_a_b = (b - a).normalized()
+			var subtract_c_b = (c - b).normalized()
+			var angle = rad2deg(abs(subtract_a_b.angle_to(subtract_c_b)))
+			
+			if angle > max_degree:
+				var smoothed_points = smooth_three_points(a, b, c)
+				point_to_smooth.append([i, smoothed_points])
+				
+		var num_added_points = 0
+		for point_info in point_to_smooth:
+			shape_points.remove(point_info[0] + num_added_points)
+			shape_points.insert(point_info[0] + num_added_points, point_info[1][2])
+			shape_points.insert(point_info[0] + num_added_points, point_info[1][1])
+			angles_smoothed_this_round += 1
+			num_added_points += 1
+
+		if angles_smoothed_this_round != 0 and shape_points.size() > 3:
+			continue
+		break
+	
+	return shape_points
+	
+func smooth_three_points(point_a, point_b, point_c):
+	var a_b_length = point_a.distance_to(point_b)
+	var c_b_length = point_c.distance_to(point_b)
+
+	var split_b_point_1 = point_b + (point_a - point_b).normalized() * (a_b_length/4)
+	var split_b_point_2 = point_b + (point_c - point_b).normalized() * (c_b_length/4) 
+	
+	var output_points = []
+	output_points.append(point_a)
+	output_points.append(split_b_point_1)
+	output_points.append(split_b_point_2)
+	output_points.append(point_c)
+	
+	return output_points
+	
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
 	var flip = 1
 	for i in range(2):# need this
 		var points_count = shape_points.size()
 		var expand_or_contract_amount = 0.0
 
-		var last_dot_facing = null
+		var last_cross_facing = null
 		var output_points = []
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
 			var b = shape_points[i]# point being tested
 			var c = shape_points[(i + 1) % points_count]
 
-			# get the dot_product
+			# get the cross_2d
 			var subtractA_B = (b - a).normalized()
 			var subtractC_B = (c - b).normalized()
-			var dot_product = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x
+			var cross_2d = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x 
 			
 			var dot_facing
-			if dot_product < 0:
+			if cross_2d < 0:
 				dot_facing = 0
 			else:
 				dot_facing = 1
 
-			# if the dot_product direction changes flip the direction of the add vector
-			if i != 0 and last_dot_facing != dot_facing:
+			# if the cross_2d direction changes flip the direction of the add vector
+			if i != 0 and last_cross_facing != dot_facing:
 				flip = flip * -1
-			last_dot_facing = dot_facing
+			last_cross_facing = dot_facing
 			
 			var vectorBetween
 			var newVector
-			if dot_product == 0 : # if points in a line
+			if cross_2d == 0 : # if points in a straight line
 				newVector = (b - a).normalized().rotated(PI/4) * flip * amount  + b
 				output_points.append(newVector)
 			else:
@@ -210,19 +270,27 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 
 func calculate_quad(index, points, border_points_count):
 	# Quad order: [topRight, topLeft, bottomLeft, bottomRight]
-	return [
+	var quad = [
 		points[(index + 1) % border_points_count],
 		points[index % border_points_count],
 		points[(index + border_points_count/2) % border_points_count],
 		points[(index + border_points_count/2 + 1) % border_points_count]
 	]
+		
+	# If quad twisted
+	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
+	if intersect_point != null:
+		quad = [quad[1], quad[0], quad[2], quad[3]]
+	
+	return quad
 
 func is_shape(shape_points):
 	return shape_points.size() >= 3
 
 func calculate_border_points(shape_points, border_size, border_overlap=0):
-	var border_outer_points = expand_or_contract_shape_points(shape_points, border_size - border_overlap)
 	var border_inner_points = expand_or_contract_shape_points(shape_points, - border_overlap)
+	var border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size - border_overlap)
+
 	border_inner_points = bytes2var(var2bytes(border_inner_points))
 	# close outer shape
 	border_inner_points.append(border_inner_points[0] + Vector2(0.0001, 0))
@@ -234,7 +302,9 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
-	var shape_points = get_polygon()
+	var shape_points =	get_polygon()
+	shape_points = smooth_shape_points(shape_points, rad2deg(get_max_angle_smooth()))
+	innerBorder = shape_points
 	if is_shape(shape_points):
 		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 		# Remove old borders
@@ -254,3 +324,5 @@ func update_borders():
 
 func _ready():
 	update()
+	if get_tree().is_editor_hint() == false:
+		set_polygon(innerBorder)
