@@ -6,10 +6,9 @@ Add borders to your Polygon2Ds. Useful for creating maps using textures.
 
 ## Usage
 
-Create a `BorderedPolygon2D` node and attach a texture and border texures. You
-might need to use options to proper align/rotate/scale texture. If you want
-differnt textures for each polygon face you will need to attach a tileset with
-each border textures.
+Create a `BorderedPolygon2D` node and attach either a single border texture or
+a TileSet with several border texures. You might need to use options to proper
+align/rotate/scale texture.
 
 ### Examples
 
