@@ -39,12 +39,13 @@ invert/border = 100.0
 script/script = ExtResource( 3 )
 __meta__ = { "_editor_icon":ExtResource( 4 ) }
 border_size = 64
-border_overlap = 32
+border_overlap = 16
 border_textures = null
 border_clockwise_shift = 0
 border_texture = ExtResource( 5 )
 border_texture_scale = Vector2( 0.25, 0.25 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.0
 
 

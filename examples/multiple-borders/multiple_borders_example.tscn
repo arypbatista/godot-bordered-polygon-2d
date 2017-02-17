@@ -30,6 +30,7 @@ border_texture = null
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.0
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
@@ -54,5 +55,6 @@ border_texture = null
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0
 
 
