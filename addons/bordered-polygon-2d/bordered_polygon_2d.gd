@@ -27,11 +27,11 @@ export (TileSet) var border_textures setget set_border_textures
 # Border textures will be rotated clock wise to the left
 export (int) var border_clockwise_shift = 0 setget set_border_clockwise_shift
 
-export(Texture) var border_texture setget set_border_texture
-export(Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
-export(Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
-export(float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
-export(float) var max_angle_smooth = 40 setget max_angle_smooth
+export (Texture) var border_texture setget set_border_texture
+export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
+export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
+export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
+export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
 
 const QUAD_TOP_1    = 1
 const QUAD_TOP_2    = 0
@@ -88,10 +88,13 @@ func set_border_clockwise_shift(value):
 	border_clockwise_shift = value
 	update()
 	
-func max_angle_smooth(value):
-	max_angle_smooth = value
+func set_smooth_level(value):
+	smooth_level = value
+	print('Set smooth level to ', value)
 	update()
 
+func get_max_angle_smooth():
+	return PI/2 * (1.0 - smooth_level)
 	
 func smooth_shape_points(shape_points, max_degree):	
 	max_degree = abs(max_degree)
@@ -103,7 +106,7 @@ func smooth_shape_points(shape_points, max_degree):
 		for i in range(shape_points.size()):
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
-			var c = shape_points[(i + 1) % current_shape_size]			
+			var c = shape_points[(i + 1) % current_shape_size]
 			
 			var subtract_a_b = (b - a).normalized()
 			var subtract_c_b = (c - b).normalized()
@@ -275,9 +278,9 @@ func calculate_quad(index, points, border_points_count):
 	]
 		
 	# If quad twisted
-	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])	
+	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
 	if intersect_point != null:
-		quad = [quad[1], quad[0], quad[2], quad[3]]		
+		quad = [quad[1], quad[0], quad[2], quad[3]]
 	
 	return quad
 
@@ -300,7 +303,7 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points =	get_polygon()
-	shape_points = smooth_shape_points(shape_points, max_angle_smooth)
+	shape_points = smooth_shape_points(shape_points, rad2deg(get_max_angle_smooth()))
 	innerBorder = shape_points
 	if is_shape(shape_points):
 		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
@@ -314,10 +317,10 @@ func make_border(border_size):
 			var width = quad[0].distance_to(quad[1])
 			var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
 			lastborder_texture_offset = width + lastborder_texture_offset
-			add_border(border)			
+			add_border(border)
 
 func update_borders():
-	make_border(border_size)		
+	make_border(border_size)
 
 func _ready():
 	update()
