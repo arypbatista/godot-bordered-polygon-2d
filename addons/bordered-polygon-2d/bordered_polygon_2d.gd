@@ -91,7 +91,7 @@ func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
 		var points_count = shape_points.size()
 		var expand_or_contract_amount = 0.0
 
-		var last_dot = null
+		var last_dot_facing = null
 		var output_points = []
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
@@ -102,39 +102,46 @@ func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
 			var subtractA_B = (b - a).normalized()
 			var subtractC_B = (c - b).normalized()
 			var dot_product = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x
-
+			
+			var dot_facing
 			if dot_product < 0:
-				dot_product = 0
+				dot_facing = 0
 			else:
-				dot_product = 1
+				dot_facing = 1
 
 			# if the dot_product direction changes flip the direction of the add vector
-			if i != 0 and last_dot != dot_product:
+			if i != 0 and last_dot_facing != dot_facing:
 				flip = flip * -1
-			last_dot = dot_product
-
-			var vectorBetween = ((b - a).normalized() + (b - c).normalized()).normalized()
-			var newVector = vectorBetween * flip * amount  + b
-			newVector = newVector + offset.rotated(newVector.angle())
-
-			output_points.append(newVector)
-
+			last_dot_facing = dot_facing
+			
+			var vectorBetween
+			var newVector
+			if dot_product == 0 : # if points in a line
+				newVector = (b - a).normalized().rotated(PI/4) * flip * amount  + b
+				output_points.append(newVector)
+			else:
+				vectorBetween = ((b - a).normalized() + (b - c).normalized()).normalized()
+				newVector = vectorBetween * flip * amount  + b
+				newVector = newVector + offset.rotated(newVector.angle())
+				output_points.append(newVector)
+				
 		# check if the first flip was right (if it was not do it over again)
-		var sides_length_collision = 0.0
+		var sides_length_original_points = 0.0
 		for i in range(shape_points.size()):
-			sides_length_collision += shape_points[i].distance_to(shape_points[(i + 1) % points_count])
+			sides_length_original_points += shape_points[i].distance_to(shape_points[(i + 1) % points_count])
 
 		var sides_length_output_points = 0.0
 		for i in range(output_points.size()):
 			sides_length_output_points += output_points[i].distance_to(output_points[(i + 1) % points_count])
 
 		# if the shape is wrong size then flip was wrong (do it over)
-		if sides_length_collision > sides_length_output_points and  amount > 0:
+		if sides_length_original_points > sides_length_output_points and  amount > 0: # if expanding
 			flip = -1
 			continue
-		elif sides_length_collision < sides_length_output_points and  amount < 0:
+		elif sides_length_original_points < sides_length_output_points and  amount < 0: # if contracting
 			flip = -1
 			continue
+			
 		return output_points
 
 func add_border(border):
