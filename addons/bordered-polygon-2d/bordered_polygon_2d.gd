@@ -146,30 +146,31 @@ func smooth_three_points(point_a, point_b, point_c):
 	return output_points
 	
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
-		var points_count = shape_points.size()
-		var expand_or_contract_amount = 0.0
+	var points_count = shape_points.size()
+	var expand_or_contract_amount = 0.0
 
-		var output_points = []
-		for i in range(points_count):
-			var a = shape_points[(i + points_count - 1) % points_count]
-			var b = shape_points[i]
-			var c = shape_points[(i + 1) % points_count]
+	var output_points = []
+	for i in range(points_count):
+		var a = shape_points[(i + points_count - 1) % points_count]
+		var b = shape_points[i]
+		var c = shape_points[(i + 1) % points_count]
 
-			# get normals
-			var subtractA_B = (b - a).normalized()
-			var subtractC_B = (c - b).normalized()
+		# get normals
+		var subtractA_B = (b - a).normalized()
+		var subtractC_B = (c - b).normalized()
+
+		var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
+		var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
+
+		var vectorBetween
+		var newVector
+
+		newVector = (a_90 + c_90).normalized() * 1 * amount  + b
+
+		output_points.append(newVector)
 			
-			var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
-			var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
-			
-			var vectorBetween
-			var newVector
-
-			newVector = (a_90 + c_90).normalized() * 1 * amount  + b
-
-			output_points.append(newVector)
-			
-return output_points
+	return output_points
+	
 func add_border(border):
 	add_child(border)
 	borders.append(border)
