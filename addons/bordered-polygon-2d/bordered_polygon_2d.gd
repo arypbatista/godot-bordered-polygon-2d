@@ -314,7 +314,8 @@ func make_border(border_size):
 		var border_points_count = border_points.size()
 		for i in range(border_points_count/2 - 1):
 			var quad = calculate_quad(i, border_points, border_points_count)
-			var width = quad[0].distance_to(quad[1])
+			# find long side
+			var width = max(quad[0].distance_to(quad[1]), quad[2].distance_to(quad[3]))
 			var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
 			lastborder_texture_offset = width + lastborder_texture_offset
 			add_border(border)
