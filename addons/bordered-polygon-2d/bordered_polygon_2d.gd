@@ -40,7 +40,7 @@ const QUAD_BOTTOM_2 = 2
 
 const SMOOTH_MAX_PASSES = 5
 const SMOOTH_MIN_ANGLE = PI*0.08
-const SMOOTH_MAX_ANGLE = PI*1.2
+const SMOOTH_MAX_ANGLE = PI/2
 
 var inner_polygon = null
 
@@ -106,8 +106,8 @@ func create_inner_polygon():
 	set_inner_polygon_node(p)
 
 func set_inner_polygon_node(polygon):
-	if inner_polygon != null and is_a_parent_of(polygon):
-		remove_child(inner_polygon)
+	if inner_polygon != null:
+		inner_polygon.queue_free()
 	inner_polygon = polygon
 	add_child(inner_polygon)
 
