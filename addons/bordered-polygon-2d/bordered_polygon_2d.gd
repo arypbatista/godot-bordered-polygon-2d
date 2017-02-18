@@ -151,13 +151,10 @@ func set_smooth_level(value):
 	update()
 
 func get_max_angle_smooth():
-	return PI/2 * (1.0 - smooth_level)
+	var _min = .25 # Minimum max angle
+	return abs((PI/2 - _min) * (1.0 - smooth_level) + _min)
 	
-func smooth_shape_points(shape_points, max_radian):	
-	max_radian = abs(max_radian)
-	if max_radian < .25:
-		max_radian = .25
-		
+func smooth_shape_points(shape_points, max_angle):	
 	for i in range(5): # max passes 
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
@@ -168,11 +165,11 @@ func smooth_shape_points(shape_points, max_radian):
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
 			
-			var subtract_a_b = (b - a).normalized()
-			var subtract_c_b = (c - b).normalized()
-			var radian = abs(subtract_a_b.angle_to(subtract_c_b))
+			var vector_ab = (b - a).normalized()
+			var vector_bc = (c - b).normalized()
+			var angle = abs(vector_ab.angle_to(vector_bc))
 			
-			if radian > max_radian:
+			if angle > max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
 				
