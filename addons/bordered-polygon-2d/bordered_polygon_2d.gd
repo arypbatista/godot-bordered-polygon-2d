@@ -86,55 +86,29 @@ func set_border_clockwise_shift(value):
 	update()
 
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
-	var flip = 1
-	for i in range(2):# need this
 		var points_count = shape_points.size()
 		var expand_or_contract_amount = 0.0
 
-		var last_dot = null
 		var output_points = []
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
-			var b = shape_points[i]# point being tested
+			var b = shape_points[i]
 			var c = shape_points[(i + 1) % points_count]
 
-			# get the dot_product
+			# get normals
 			var subtractA_B = (b - a).normalized()
 			var subtractC_B = (c - b).normalized()
-			var dot_product = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x
+			
+			var a_forty_5 = Vector2(subtractA_B.y, -subtractA_B.x)
+			var c_forty_5 = Vector2(subtractC_B.y, -subtractC_B.x)
+			
+			var vectorBetween
+			var newVector
 
-			if dot_product < 0:
-				dot_product = 0
-			else:
-				dot_product = 1
-
-			# if the dot_product direction changes flip the direction of the add vector
-			if i != 0 and last_dot != dot_product:
-				flip = flip * -1
-			last_dot = dot_product
-
-			var vectorBetween = ((b - a).normalized() + (b - c).normalized()).normalized()
-			var newVector = vectorBetween * flip * amount  + b
-			newVector = newVector + offset.rotated(newVector.angle())
+			newVector = (a_forty_5 + c_forty_5).normalized() * 1 * amount  + b
 
 			output_points.append(newVector)
-
-		# check if the first flip was right (if it was not do it over again)
-		var sides_length_collision = 0.0
-		for i in range(shape_points.size()):
-			sides_length_collision += shape_points[i].distance_to(shape_points[(i + 1) % points_count])
-
-		var sides_length_output_points = 0.0
-		for i in range(output_points.size()):
-			sides_length_output_points += output_points[i].distance_to(output_points[(i + 1) % points_count])
-
-		# if the shape is wrong size then flip was wrong (do it over)
-		if sides_length_collision > sides_length_output_points and  amount > 0:
-			flip = -1
-			continue
-		elif sides_length_collision < sides_length_output_points and  amount < 0:
-			flip = -1
-			continue
+			
 		return output_points
 
 func add_border(border):
