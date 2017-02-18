@@ -38,6 +38,10 @@ const QUAD_TOP_2    = 0
 const QUAD_BOTTOM_1 = 3
 const QUAD_BOTTOM_2 = 2
 
+const SMOOTH_MAX_PASSES = 5
+const SMOOTH_MIN_ANGLE = PI*0.08
+const SMOOTH_MAX_ANGLE = PI*1.2
+
 var inner_polygon = null
 
 var clockwise = null
@@ -151,16 +155,16 @@ func set_smooth_level(value):
 	update()
 
 func get_max_angle_smooth():
-	var _min = .25 # Minimum max angle
-	return abs((PI/2 - _min) * (1.0 - smooth_level) + _min)
+	var smooth_range = SMOOTH_MAX_ANGLE - SMOOTH_MIN_ANGLE
+	return abs(smooth_range * (1.0 - smooth_level) + SMOOTH_MIN_ANGLE)
 
 func triad_angle(a, b, c):
 	var vector_ab = (b - a).normalized()
 	var vector_bc = (c - b).normalized()
-	return abs(vector_ab.angle_to(vector_bc))
+	return vector_ab.angle_to(vector_bc)
 
 func smooth_shape_points(shape_points, max_angle):	
-	for i in range(5): # max passes 
+	for i in range(SMOOTH_MAX_PASSES): # max passes 
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
 		var current_shape_size = shape_points.size()
@@ -171,8 +175,8 @@ func smooth_shape_points(shape_points, max_angle):
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
-
-			if triad_angle(a, b, c) > max_angle:
+			
+			if abs(triad_angle(a, b, c)) > max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
 				
@@ -190,18 +194,30 @@ func smooth_shape_points(shape_points, max_angle):
 	
 	return shape_points
 	
-func smooth_three_points(point_a, point_b, point_c):
-	var vector_ba = point_a - point_b
-	var vector_bc = point_c - point_b
+func smooth_three_points(a, b, c):
+	var convex_triad = triad_angle(a,b,c) > 0
+	var rotation
+	if convex_triad:
+		rotation = PI
+	else:
+		rotation = 0
+		
+	var vector_ba = a - b
+	var vector_bc = c - b
 	
-	var split_b_point_1 = point_b + vector_ba.normalized() * (vector_ba.length()/4)
-	var split_b_point_2 = point_b + vector_bc.normalized() * (vector_bc.length()/4) 
+	var splitted_b = [
+		b + vector_ba.normalized().rotated(rotation) * (vector_ba.length()/4),
+		b + vector_bc.normalized().rotated(rotation) * (vector_bc.length()/4)
+	]
+	
+	if convex_triad:
+		splitted_b.invert()
 	
 	var output_points = []
-	output_points.append(point_a)
-	output_points.append(split_b_point_1)
-	output_points.append(split_b_point_2)
-	output_points.append(point_c)
+	output_points.append(a)
+	for point in splitted_b:
+		output_points.append(point)
+	output_points.append(c)
 	
 	return output_points
 
