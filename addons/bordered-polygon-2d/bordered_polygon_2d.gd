@@ -90,14 +90,16 @@ func set_border_clockwise_shift(value):
 	
 func set_smooth_level(value):
 	smooth_level = value
-	print('Set smooth level to ', value)
 	update()
 
 func get_max_angle_smooth():
 	return PI/2 * (1.0 - smooth_level)
 	
-func smooth_shape_points(shape_points, max_degree):	
-	max_degree = abs(max_degree)
+func smooth_shape_points(shape_points, max_radian):	
+	max_radian = abs(max_radian)
+	if max_radian < .25:
+		max_radian = .25
+		
 	for i in range(5): # max passes 
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
@@ -110,9 +112,9 @@ func smooth_shape_points(shape_points, max_degree):
 			
 			var subtract_a_b = (b - a).normalized()
 			var subtract_c_b = (c - b).normalized()
-			var angle = rad2deg(abs(subtract_a_b.angle_to(subtract_c_b)))
+			var radian = abs(subtract_a_b.angle_to(subtract_c_b))
 			
-			if angle > max_degree:
+			if radian > max_radian:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
 				
@@ -144,65 +146,32 @@ func smooth_three_points(point_a, point_b, point_c):
 	output_points.append(point_c)
 	
 	return output_points
-	
+
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
-	var flip = 1
-	for i in range(2):# need this
-		var points_count = shape_points.size()
-		var expand_or_contract_amount = 0.0
+	var points_count = shape_points.size()
+	var expand_or_contract_amount = 0.0
 
-		var last_cross_facing = null
-		var output_points = []
-		for i in range(points_count):
-			var a = shape_points[(i + points_count - 1) % points_count]
-			var b = shape_points[i]# point being tested
-			var c = shape_points[(i + 1) % points_count]
+	var output_points = []
+	for i in range(points_count):
+		var a = shape_points[(i + points_count - 1) % points_count]
+		var b = shape_points[i]
+		var c = shape_points[(i + 1) % points_count]
 
-			# get the cross_2d
-			var subtractA_B = (b - a).normalized()
-			var subtractC_B = (c - b).normalized()
-			var cross_2d = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x 
-			
-			var dot_facing
-			if cross_2d < 0:
-				dot_facing = 0
-			else:
-				dot_facing = 1
+		# get normals
+		var subtractA_B = (b - a).normalized()
+		var subtractC_B = (c - b).normalized()
 
-			# if the cross_2d direction changes flip the direction of the add vector
-			if i != 0 and last_cross_facing != dot_facing:
-				flip = flip * -1
-			last_cross_facing = dot_facing
-			
-			var vectorBetween
-			var newVector
-			if cross_2d == 0 : # if points in a straight line
-				newVector = (b - a).normalized().rotated(PI/4) * flip * amount  + b
-				output_points.append(newVector)
-			else:
-				vectorBetween = ((b - a).normalized() + (b - c).normalized()).normalized()
-				newVector = vectorBetween * flip * amount  + b
-				newVector = newVector + offset.rotated(newVector.angle())
-				output_points.append(newVector)
-				
-		# check if the first flip was right (if it was not do it over again)
-		var sides_length_original_points = 0.0
-		for i in range(shape_points.size()):
-			sides_length_original_points += shape_points[i].distance_to(shape_points[(i + 1) % points_count])
+		var a_forty_5 = Vector2(subtractA_B.y, -subtractA_B.x)
+		var c_forty_5 = Vector2(subtractC_B.y, -subtractC_B.x)
 
-		var sides_length_output_points = 0.0
-		for i in range(output_points.size()):
-			sides_length_output_points += output_points[i].distance_to(output_points[(i + 1) % points_count])
+		var vectorBetween
+		var newVector
 
-		# if the shape is wrong size then flip was wrong (do it over)
-		if sides_length_original_points > sides_length_output_points and  amount > 0: # if expanding
-			flip = -1
-			continue
-		elif sides_length_original_points < sides_length_output_points and  amount < 0: # if contracting
-			flip = -1
-			continue
-			
-		return output_points
+		newVector = (a_forty_5 + c_forty_5).normalized() * 1 * amount  + b
+
+		output_points.append(newVector)
+
+	return output_points
 
 func add_border(border):
 	add_child(border)
@@ -210,7 +179,7 @@ func add_border(border):
 
 func remove_borders():
 	for c in borders:
-		remove_child(c)
+		c.queue_free()
 	borders = []
 
 func possitive_angle(angle):
@@ -303,7 +272,7 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points =	get_polygon()
-	shape_points = smooth_shape_points(shape_points, rad2deg(get_max_angle_smooth()))
+	shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
 	innerBorder = shape_points
 	if is_shape(shape_points):
 		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
@@ -312,11 +281,19 @@ func make_border(border_size):
 		# Turn points to quads
 		var lastborder_texture_offset = 0
 		var border_points_count = border_points.size()
+		var image_width = 0
+		if border_textures != null and tileset_size(border_textures) >= 1:
+			image_width = border_textures.tile_get_texture(0).get_size().x
+		elif border_texture != null:
+			image_width = border_texture.get_size().x
+		else:
+			return
 		for i in range(border_points_count/2 - 1):
 			var quad = calculate_quad(i, border_points, border_points_count)
 			var width = quad[0].distance_to(quad[1])
-			var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
-			lastborder_texture_offset = width + lastborder_texture_offset
+			var current_offset = lastborder_texture_offset
+			var border = create_border(width, border_size, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
+			lastborder_texture_offset = image_width - (width - current_offset)
 			add_border(border)
 
 func update_borders():

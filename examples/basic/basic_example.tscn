@@ -45,5 +45,6 @@ border_texture = ExtResource( 5 )
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.0
 
 
