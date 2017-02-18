@@ -312,11 +312,17 @@ func make_border(border_size):
 		# Turn points to quads
 		var lastborder_texture_offset = 0
 		var border_points_count = border_points.size()
+		var image_width = 0
+		if border_textures != null and tileset_size(border_textures) >= 1:
+			image_width = border_textures.tile_get_texture(0).get_size().x
+		elif border_texture != null:
+			image_width = border_texture.get_size().x
 		for i in range(border_points_count/2 - 1):
 			var quad = calculate_quad(i, border_points, border_points_count)
 			var width = quad[0].distance_to(quad[1])
-			var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
-			lastborder_texture_offset = width + lastborder_texture_offset
+			var current_offset = lastborder_texture_offset
+			var border = create_border(width, border_size, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
+			lastborder_texture_offset = image_width - (width - current_offset)
 			add_border(border)
 
 func update_borders():
