@@ -38,7 +38,7 @@ const QUAD_TOP_2    = 0
 const QUAD_BOTTOM_1 = 3
 const QUAD_BOTTOM_2 = 2
 
-var inner_border = []
+var inner_polygon = null
 
 var clockwise = null
 
@@ -52,6 +52,8 @@ func tileset_size(tileset):
 
 func update():
 	if _is_ready:
+		# We only use polygon for edition purposes
+		set_self_opacity(0)
 		update_borders()
 
 func invalidate():
@@ -83,8 +85,22 @@ func is_clockwise():
 	return clockwise
 
 func set_polygon(polygon):
-	.set_polygon(polygon)
+	set_inner_polygon_node(self.duplicate())
 	update()
+
+func set_inner_polygon_node(polygon):
+	if inner_polygon != null:
+		remove_child(inner_polygon)
+	inner_polygon = polygon
+	add_child(inner_polygon)
+		
+func set_inner_polygon(polygon):
+	if typeof(polygon) == TYPE_VECTOR2_ARRAY:
+		if inner_polygon == null:
+			inner_polygon = self.duplicate()
+		inner_polygon.set_polygon(polygon)
+	else: # polygon is Polygon2D node
+		set_inner_polygon_node(polygon)
 
 func set_border_size(value):
 	border_size = value
@@ -331,7 +347,7 @@ func make_border(border_size):
 		shape_points.invert()
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
-	inner_border = shape_points
+	set_inner_polygon(shape_points)
 	
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 	
@@ -356,5 +372,3 @@ func update_borders():
 
 func _ready():
 	update()
-	if get_tree().is_editor_hint() == false:
-		set_polygon(inner_border)
