@@ -85,19 +85,31 @@ func is_clockwise():
 	return clockwise
 
 func set_polygon(polygon):
-	set_inner_polygon_node(self.duplicate())
+	.set_polygon(polygon)
+	create_inner_polygon()
 	update()
 
+func create_inner_polygon():
+	var p = Polygon2D.new()
+	p.set_texture(get_texture())
+	p.set_texture_scale(get_texture_scale())
+	p.set_texture_rotation(get_texture_rotation())
+	p.set_texture_offset(get_texture_offset())
+	p.set_uv(get_uv())
+	p.set_color(get_color())
+	p.set_vertex_colors(get_vertex_colors())
+	p.set_polygon(get_polygon())
+	set_inner_polygon_node(p)
+
 func set_inner_polygon_node(polygon):
-	if inner_polygon != null:
+	if inner_polygon != null and is_a_parent_of(polygon):
 		remove_child(inner_polygon)
 	inner_polygon = polygon
 	add_child(inner_polygon)
 		
 func set_inner_polygon(polygon):
 	if typeof(polygon) == TYPE_VECTOR2_ARRAY:
-		if inner_polygon == null:
-			inner_polygon = self.duplicate()
+		create_inner_polygon()
 		inner_polygon.set_polygon(polygon)
 	else: # polygon is Polygon2D node
 		set_inner_polygon_node(polygon)

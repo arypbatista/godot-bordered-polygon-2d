@@ -40,7 +40,7 @@ texture = ExtResource( 2 )
 
 [node name="Sign 2" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -38, 94 )
+transform/pos = Vector2( -48, 92 )
 texture = ExtResource( 2 )
 
 [node name="Treasure" type="Sprite" parent="Sprites"]
@@ -104,7 +104,7 @@ texture = ExtResource( 6 )
 
 [node name="Flower 3" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -34, 94 )
+transform/pos = Vector2( -40, 92 )
 texture = ExtResource( 7 )
 
 [node name="Fence" type="Sprite" parent="Sprites"]
@@ -116,8 +116,9 @@ region_rect = Rect2( 0, 0, 64, 16 )
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
-transform/pos = Vector2( -8, -12 )
-polygon = Vector2Array( 256, 192, 704, 204, 768, 180, 800, 188, 784, 244, 744, 260, 716, 260, 548, 228, 388, 236, 324, 284, 276, 348, 164, 340, 156, 268, 188, 220 )
+visibility/self_opacity = 0.0
+transform/pos = Vector2( -8, 24 )
+polygon = Vector2Array( 188, 220, 156, 268, 162, 322, 192, 342, 248, 346, 288, 332, 324, 284, 388, 236, 548, 228, 716, 260, 744, 260, 784, 244, 796, 202, 793, 190, 786, 184.5, 768, 180, 704, 204, 264, 200 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -129,7 +130,7 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_editor_icon":ExtResource( 11 ) }
 border_size = 64
 border_overlap = 16
 border_textures = ExtResource( 12 )
@@ -142,8 +143,9 @@ smooth_level = 0.4
 
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
 
-transform/pos = Vector2( -20, -4 )
-polygon = Vector2Array( 720, 432, 652, 428, 612, 428, 552, 444, 532, 428, 572, 404, 644, 396, 732, 404, 804, 380, 820, 396, 816, 424, 776, 432 )
+visibility/self_opacity = 0.0
+transform/pos = Vector2( -128, 24 )
+polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 548, 420, 540, 436, 552, 444, 612, 428, 652, 428, 720, 432 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -168,8 +170,9 @@ smooth_level = 0.4
 
 [node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
 
-transform/pos = Vector2( -16, -8 )
-polygon = Vector2Array( 96, 680, 48, 616, 80, 568, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1064, 544, 1092, 588, 1096, 640, 1056, 664 )
+visibility/self_opacity = 0.0
+transform/pos = Vector2( -20, -8 )
+polygon = Vector2Array( 336, 676, 84, 664, 60, 632, 56, 604, 72, 580, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1071, 555, 1092, 588, 1095, 627, 1086, 646, 1056, 664 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
