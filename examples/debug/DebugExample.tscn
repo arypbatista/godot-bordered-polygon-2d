@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=1]
+[ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=2]
+[ext_resource path="res://examples/debug/debug-border.png" type="Texture" id=3]
+
+[node name="DebugExample" type="Node2D"]
+
+[node name="BorderedPolygon2D" type="Polygon2D" parent="."]
+
+visibility/self_opacity = 0.0
+polygon = Vector2Array( 524, 420, 540, 124, 660, 164, 868, 188, 700, 316, 756, 452 )
+uv = Vector2Array(  )
+color = Color( 0.515625, 0.515625, 0.515625, 0 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 1 )
+__meta__ = { "_editor_icon":ExtResource( 2 ) }
+border_size = 32
+border_overlap = 16
+border_textures = null
+border_clockwise_shift = 0
+border_texture = ExtResource( 3 )
+border_texture_scale = Vector2( 1, 1 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 0.0
+smooth_level = 0.9
+
+

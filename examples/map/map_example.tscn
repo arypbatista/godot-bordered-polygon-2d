@@ -145,7 +145,7 @@ smooth_level = 0.4
 
 visibility/self_opacity = 0.0
 transform/pos = Vector2( -128, 24 )
-polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 548, 420, 540, 436, 552, 444, 612, 428, 652, 428, 720, 432 )
+polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 552, 408, 520, 432, 568, 456, 600, 424, 652, 428, 720, 432 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
