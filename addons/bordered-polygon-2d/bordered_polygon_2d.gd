@@ -110,7 +110,7 @@ func set_inner_polygon_node(polygon):
 		remove_child(inner_polygon)
 	inner_polygon = polygon
 	add_child(inner_polygon)
-		
+
 func set_inner_polygon(polygon):
 	if typeof(polygon) == TYPE_VECTOR2_ARRAY:
 		create_inner_polygon()
@@ -149,7 +149,7 @@ func set_border_textures(value):
 func set_border_clockwise_shift(value):
 	border_clockwise_shift = value
 	update()
-	
+
 func set_smooth_level(value):
 	smooth_level = value
 	update()
@@ -163,23 +163,23 @@ func triad_angle(a, b, c):
 	var vector_bc = (c - b).normalized()
 	return vector_ab.angle_to(vector_bc)
 
-func smooth_shape_points(shape_points, max_angle):	
-	for i in range(SMOOTH_MAX_PASSES): # max passes 
+func smooth_shape_points(shape_points, max_angle):
+	for i in range(SMOOTH_MAX_PASSES): # max passes
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
 		var current_shape_size = shape_points.size()
-		
+
 		for i in range(shape_points.size()):
 			# b is the point to be smoothen
 			# a and c are adyacent points
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
-			
+
 			if abs(triad_angle(a, b, c)) > max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
-				
+
 		var num_added_points = 0
 		for point_info in point_to_smooth:
 			shape_points.remove(point_info[0] + num_added_points)
@@ -191,9 +191,9 @@ func smooth_shape_points(shape_points, max_angle):
 		if angles_smoothed_this_round != 0 and shape_points.size() > 3:
 			continue
 		break
-	
+
 	return shape_points
-	
+
 func smooth_three_points(a, b, c):
 	var convex_triad = triad_angle(a,b,c) > 0
 	var rotation
@@ -201,50 +201,41 @@ func smooth_three_points(a, b, c):
 		rotation = PI
 	else:
 		rotation = 0
-		
+
 	var vector_ba = a - b
 	var vector_bc = c - b
-	
+
 	var splitted_b = [
 		b + vector_ba.normalized().rotated(rotation) * (vector_ba.length()/4),
 		b + vector_bc.normalized().rotated(rotation) * (vector_bc.length()/4)
 	]
-	
+
 	if convex_triad:
 		splitted_b.invert()
-	
+
 	var output_points = []
 	output_points.append(a)
 	for point in splitted_b:
 		output_points.append(point)
 	output_points.append(c)
-	
+
 	return output_points
 
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
 	var points_count = shape_points.size()
 	var expand_or_contract_amount = 0.0
-
 	var output_points = []
 	for i in range(points_count):
 		var a = shape_points[(i + points_count - 1) % points_count]
 		var b = shape_points[i]
 		var c = shape_points[(i + 1) % points_count]
-
 		# get normals
 		var subtractA_B = (b - a).normalized()
 		var subtractC_B = (c - b).normalized()
-
-		var a_forty_5 = Vector2(subtractA_B.y, -subtractA_B.x)
-		var c_forty_5 = Vector2(subtractC_B.y, -subtractC_B.x)
-
-		var vectorBetween
-		var newVector
-
-		newVector = (a_forty_5 + c_forty_5).normalized() * 1 * amount  + b
-
+		var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
+		var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
+		var newVector = (a_90 + c_90).normalized() * 1 * amount  + b
 		output_points.append(newVector)
-
 	return output_points
 
 func add_border(border):
@@ -265,11 +256,11 @@ func possitive_angle(angle):
 func quad_angle(quad):
 	# Vector for top quad segment
 	var v = quad[QUAD_TOP_1] - quad[QUAD_TOP_2]
-	
+
 	# Perpendicular vector to the segment vector
 	# This is the angle for the segment, the face angle
 	var vp = Vector2(v.y, v.x * -1)
-	
+
 	# Make angle clockwise
 	var angle = possitive_angle(PI*2 - vp.angle())
 	return angle
@@ -317,11 +308,11 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	border.set_uv( [ Vector2(width, 0), Vector2(0, 0), Vector2(0, height), Vector2(width, height)])
 	border.set_polygon(quad)
 	border.set_texture_offset(offset)
-	
+
 	var tex = get_border_texture_for_angle(border_angle)
 	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 	border.set_texture(tex)
-	
+
 	var texture_rotation = deg2rad(border_texture_rotation) + PI
 	border.set_texture_rotation(texture_rotation)
 	border.set_texture_scale(invert_scale(border_texture_scale))
@@ -335,12 +326,12 @@ func calculate_quad(index, points, border_points_count):
 		points[(index + border_points_count/2) % border_points_count],
 		points[(index + border_points_count/2 + 1) % border_points_count]
 	]
-		
+
 	# If quad twisted
 	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
 	if intersect_point != null:
 		quad = [quad[1], quad[0], quad[2], quad[3]]
-	
+
 	return quad
 
 func is_shape(shape_points):
@@ -381,9 +372,9 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
 	set_inner_polygon(shape_points)
-	
+
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
-	
+
 	# Turn points to quads
 	var lastborder_texture_offset = 0
 	var border_points_count = border_points.size()
@@ -392,12 +383,11 @@ func make_border(border_size):
 
 	for i in range(border_points_count/2 - 1):
 		var quad = calculate_quad(i, border_points, border_points_count)
-		var height = border_size
 		var width = max_quad_width(quad)
-		var current_offset = lastborder_texture_offset
-		var border = create_border(width, height, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
-		lastborder_texture_offset = sample_width - (width - current_offset)
+		var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
+		lastborder_texture_offset = width + lastborder_texture_offset
 		add_border(border)
+
 
 func update_borders():
 	# Remove old borders

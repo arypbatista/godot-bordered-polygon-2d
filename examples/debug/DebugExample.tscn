@@ -9,7 +9,7 @@
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-polygon = Vector2Array( 524, 420, 540, 124, 660, 164, 868, 188, 700, 316, 756, 452 )
+polygon = Vector2Array( 524, 420, 540, 124, 660, 164, 868, 188, 848, 320, 688, 320, 756, 452 )
 uv = Vector2Array(  )
 color = Color( 0.515625, 0.515625, 0.515625, 0 )
 vertex_colors = ColorArray(  )
