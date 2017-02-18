@@ -171,9 +171,8 @@ func smooth_shape_points(shape_points, max_angle):
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
-			var angle = triad_angle(a, b, c)
 
-			if angle > max_angle:
+			if triad_angle(a, b, c) > max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
 				
