@@ -90,7 +90,6 @@ func set_border_clockwise_shift(value):
 	
 func set_smooth_level(value):
 	smooth_level = value
-	print('Set smooth level to ', value)
 	update()
 
 func get_max_angle_smooth():
@@ -98,7 +97,6 @@ func get_max_angle_smooth():
 	
 func smooth_shape_points(shape_points, max_radian):	
 	max_radian = abs(max_radian)
-	print(max_radian)
 	if max_radian < .25:
 		max_radian = .25
 		
