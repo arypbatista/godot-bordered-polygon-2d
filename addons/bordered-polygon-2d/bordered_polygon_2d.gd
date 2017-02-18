@@ -365,8 +365,13 @@ func get_border_texture(idx):
 	else:
 		return border_texture
 
-func get_texture_width():
-	return get_border_texture(0).get_size().x
+func get_texture_sample():
+	return get_border_texture(0)
+
+func max_quad_width(quad):
+	var top_width = quad[QUAD_TOP_1].distance_to(quad[QUAD_TOP_2])
+	var bottom_width = quad[QUAD_BOTTOM_1].distance_to(quad[QUAD_BOTTOM_2])
+	return max(top_width, bottom_width)
 
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
@@ -382,14 +387,16 @@ func make_border(border_size):
 	# Turn points to quads
 	var lastborder_texture_offset = 0
 	var border_points_count = border_points.size()
-	var image_width = get_texture_width()
+	var texture_sample = get_texture_sample()
+	var sample_width = texture_sample.get_size().x
 
 	for i in range(border_points_count/2 - 1):
 		var quad = calculate_quad(i, border_points, border_points_count)
-		var width = quad[0].distance_to(quad[1])
+		var height = border_size
+		var width = max_quad_width(quad)
 		var current_offset = lastborder_texture_offset
-		var border = create_border(width, border_size, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
-		lastborder_texture_offset = image_width - (width - current_offset)
+		var border = create_border(width, height, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
+		lastborder_texture_offset = sample_width - (width - current_offset)
 		add_border(border)
 
 func update_borders():
