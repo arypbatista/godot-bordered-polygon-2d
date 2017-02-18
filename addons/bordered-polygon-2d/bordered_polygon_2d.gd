@@ -38,7 +38,7 @@ const QUAD_TOP_2    = 0
 const QUAD_BOTTOM_1 = 3
 const QUAD_BOTTOM_2 = 2
 
-var innerBorder = []
+var inner_border = []
 
 var clockwise = null
 
@@ -327,9 +327,10 @@ func get_texture_width():
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points = get_polygon()
+	if is_clockwise_shape(shape_points):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
-	innerBorder = shape_points
+	inner_border = shape_points
 	if is_shape(shape_points):
 		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 		
@@ -355,4 +356,4 @@ func update_borders():
 func _ready():
 	update()
 	if get_tree().is_editor_hint() == false:
-		set_polygon(innerBorder)
+		set_polygon(inner_border)
