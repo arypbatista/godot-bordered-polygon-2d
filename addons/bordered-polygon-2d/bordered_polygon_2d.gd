@@ -73,7 +73,7 @@ func is_clockwise_shape(shape):
 		var v0_to_1 = shape[1] - shape[0]
 		var v0_to_2 = shape[2] - shape[0]
 		var res = cross_product_z(v0_to_1, v0_to_2)
-		return res < 0
+		return res > 0
 	else:
 		return false
 
@@ -327,7 +327,8 @@ func get_texture_width():
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points = get_polygon()
-	if is_clockwise_shape(shape_points):
+	if not is_clockwise_shape(shape_points):
+		shape_points.invert()
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
 	inner_border = shape_points
