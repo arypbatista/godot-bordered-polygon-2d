@@ -146,64 +146,30 @@ func smooth_three_points(point_a, point_b, point_c):
 	return output_points
 	
 func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
-	var flip = 1
-	for i in range(2):# need this
 		var points_count = shape_points.size()
 		var expand_or_contract_amount = 0.0
 
-		var last_cross_facing = null
 		var output_points = []
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
-			var b = shape_points[i]# point being tested
+			var b = shape_points[i]
 			var c = shape_points[(i + 1) % points_count]
 
-			# get the cross_2d
+			# get normals
 			var subtractA_B = (b - a).normalized()
 			var subtractC_B = (c - b).normalized()
-			var cross_2d = subtractA_B.x * subtractC_B.y - subtractA_B.y * subtractC_B.x 
 			
-			var dot_facing
-			if cross_2d < 0:
-				dot_facing = 0
-			else:
-				dot_facing = 1
-
-			# if the cross_2d direction changes flip the direction of the add vector
-			if i != 0 and last_cross_facing != dot_facing:
-				flip = flip * -1
-			last_cross_facing = dot_facing
+			var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
+			var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
 			
 			var vectorBetween
 			var newVector
-			if cross_2d == 0 : # if points in a straight line
-				newVector = (b - a).normalized().rotated(PI/4) * flip * amount  + b
-				output_points.append(newVector)
-			else:
-				vectorBetween = ((b - a).normalized() + (b - c).normalized()).normalized()
-				newVector = vectorBetween * flip * amount  + b
-				newVector = newVector + offset.rotated(newVector.angle())
-				output_points.append(newVector)
-				
-		# check if the first flip was right (if it was not do it over again)
-		var sides_length_original_points = 0.0
-		for i in range(shape_points.size()):
-			sides_length_original_points += shape_points[i].distance_to(shape_points[(i + 1) % points_count])
 
-		var sides_length_output_points = 0.0
-		for i in range(output_points.size()):
-			sides_length_output_points += output_points[i].distance_to(output_points[(i + 1) % points_count])
+			newVector = (a_90 + c_90).normalized() * 1 * amount  + b
 
-		# if the shape is wrong size then flip was wrong (do it over)
-		if sides_length_original_points > sides_length_output_points and  amount > 0: # if expanding
-			flip = -1
-			continue
-		elif sides_length_original_points < sides_length_output_points and  amount < 0: # if contracting
-			flip = -1
-			continue
+			output_points.append(newVector)
 			
-		return output_points
-
+return output_points
 func add_border(border):
 	add_child(border)
 	borders.append(border)
