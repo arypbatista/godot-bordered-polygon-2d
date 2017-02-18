@@ -96,8 +96,12 @@ func set_smooth_level(value):
 func get_max_angle_smooth():
 	return PI/2 * (1.0 - smooth_level)
 	
-func smooth_shape_points(shape_points, max_degree):	
-	max_degree = abs(max_degree)
+func smooth_shape_points(shape_points, max_radian):	
+	max_radian = abs(max_radian)
+	print(max_radian)
+	if max_radian < .25:
+		max_radian = .25
+		
 	for i in range(5): # max passes 
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
@@ -110,9 +114,9 @@ func smooth_shape_points(shape_points, max_degree):
 			
 			var subtract_a_b = (b - a).normalized()
 			var subtract_c_b = (c - b).normalized()
-			var angle = rad2deg(abs(subtract_a_b.angle_to(subtract_c_b)))
+			var radian = abs(subtract_a_b.angle_to(subtract_c_b))
 			
-			if angle > max_degree:
+			if radian > max_radian:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
 				
@@ -210,7 +214,7 @@ func add_border(border):
 
 func remove_borders():
 	for c in borders:
-		remove_child(c)
+		c.queue_free()
 	borders = []
 
 func possitive_angle(angle):
@@ -303,7 +307,7 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points =	get_polygon()
-	shape_points = smooth_shape_points(shape_points, rad2deg(get_max_angle_smooth()))
+	shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
 	innerBorder = shape_points
 	if is_shape(shape_points):
 		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
@@ -317,6 +321,8 @@ func make_border(border_size):
 			image_width = border_textures.tile_get_texture(0).get_size().x
 		elif border_texture != null:
 			image_width = border_texture.get_size().x
+		else:
+			return
 		for i in range(border_points_count/2 - 1):
 			var quad = calculate_quad(i, border_points, border_points_count)
 			var width = quad[0].distance_to(quad[1])
