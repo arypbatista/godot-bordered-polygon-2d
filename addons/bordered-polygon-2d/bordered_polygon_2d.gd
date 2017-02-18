@@ -153,7 +153,12 @@ func set_smooth_level(value):
 func get_max_angle_smooth():
 	var _min = .25 # Minimum max angle
 	return abs((PI/2 - _min) * (1.0 - smooth_level) + _min)
-	
+
+func triad_angle(a, b, c):
+	var vector_ab = (b - a).normalized()
+	var vector_bc = (c - b).normalized()
+	return abs(vector_ab.angle_to(vector_bc))
+
 func smooth_shape_points(shape_points, max_angle):	
 	for i in range(5): # max passes 
 		var point_to_smooth = []
@@ -161,14 +166,13 @@ func smooth_shape_points(shape_points, max_angle):
 		var current_shape_size = shape_points.size()
 		
 		for i in range(shape_points.size()):
+			# b is the point to be smoothen
+			# a and c are adyacent points
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
-			
-			var vector_ab = (b - a).normalized()
-			var vector_bc = (c - b).normalized()
-			var angle = abs(vector_ab.angle_to(vector_bc))
-			
+			var angle = triad_angle(a, b, c)
+
 			if angle > max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
 				point_to_smooth.append([i, smoothed_points])
@@ -188,11 +192,11 @@ func smooth_shape_points(shape_points, max_angle):
 	return shape_points
 	
 func smooth_three_points(point_a, point_b, point_c):
-	var a_b_length = point_a.distance_to(point_b)
-	var c_b_length = point_c.distance_to(point_b)
-
-	var split_b_point_1 = point_b + (point_a - point_b).normalized() * (a_b_length/4)
-	var split_b_point_2 = point_b + (point_c - point_b).normalized() * (c_b_length/4) 
+	var vector_ba = point_a - point_b
+	var vector_bc = point_c - point_b
+	
+	var split_b_point_1 = point_b + vector_ba.normalized() * (vector_ba.length()/4)
+	var split_b_point_2 = point_b + vector_bc.normalized() * (vector_bc.length()/4) 
 	
 	var output_points = []
 	output_points.append(point_a)
