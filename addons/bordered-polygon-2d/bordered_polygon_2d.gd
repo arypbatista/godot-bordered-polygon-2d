@@ -332,26 +332,26 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
 	inner_border = shape_points
-	if is_shape(shape_points):
-		var border_points = calculate_border_points(shape_points, border_size, border_overlap)
-		
-		# Turn points to quads
-		var lastborder_texture_offset = 0
-		var border_points_count = border_points.size()
-		var image_width = get_texture_width()
+	
+	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
+	
+	# Turn points to quads
+	var lastborder_texture_offset = 0
+	var border_points_count = border_points.size()
+	var image_width = get_texture_width()
 
-		for i in range(border_points_count/2 - 1):
-			var quad = calculate_quad(i, border_points, border_points_count)
-			var width = quad[0].distance_to(quad[1])
-			var current_offset = lastborder_texture_offset
-			var border = create_border(width, border_size, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
-			lastborder_texture_offset = image_width - (width - current_offset)
-			add_border(border)
+	for i in range(border_points_count/2 - 1):
+		var quad = calculate_quad(i, border_points, border_points_count)
+		var width = quad[0].distance_to(quad[1])
+		var current_offset = lastborder_texture_offset
+		var border = create_border(width, border_size, quad, Vector2(current_offset + border_texture_offset.x, border_texture_offset.y))
+		lastborder_texture_offset = image_width - (width - current_offset)
+		add_border(border)
 
 func update_borders():
 	# Remove old borders
 	remove_borders()
-	if has_border_textures():
+	if is_shape(get_polygon()) and has_border_textures():
 		make_border(border_size)
 
 func _ready():
