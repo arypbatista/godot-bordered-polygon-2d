@@ -15,6 +15,8 @@
 
 [node name="MapExample" type="Node2D"]
 
+__meta__ = { "_edit_lock_":true }
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
 polygon = Vector2Array( -320, -192, 1344, -192, 1344, 832, -320, 832 )
@@ -28,88 +30,94 @@ texture/scale = Vector2( 1, 1 )
 texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
+__meta__ = { "_edit_lock_":true }
 
 [node name="Sprites" type="Node2D" parent="."]
 
-transform/pos = Vector2( 536, 160 )
 transform/scale = Vector2( 4, 4 )
+__meta__ = { "_edit_lock_":true }
 
 [node name="Sign" type="Sprite" parent="Sprites"]
 
+transform/pos = Vector2( 138, 41 )
 texture = ExtResource( 2 )
 
 [node name="Sign 2" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -48, 92 )
+transform/pos = Vector2( 90, 134 )
 texture = ExtResource( 2 )
 
 [node name="Treasure" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 12, 52 )
+transform/pos = Vector2( 144, 86 )
 texture = ExtResource( 3 )
 
-[node name="Rock" type="Sprite" parent="Sprites"]
+[node name="RockFormation" type="Node2D" parent="Sprites"]
 
-transform/pos = Vector2( -42, -12 )
+editor/display_folded = true
+transform/pos = Vector2( 96, 28.5 )
+
+[node name="Rock" type="Sprite" parent="Sprites/RockFormation"]
+
 texture = ExtResource( 4 )
 
-[node name="Rock 2" type="Sprite" parent="Sprites"]
+[node name="Rock 2" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -36, -8 )
+transform/pos = Vector2( 6, 4 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Rock 3" type="Sprite" parent="Sprites"]
+[node name="Rock 3" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -44, -8 )
+transform/pos = Vector2( -2, 4 )
 texture = ExtResource( 4 )
 
-[node name="Rock 4" type="Sprite" parent="Sprites"]
+[node name="Rock 4" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -36, -2 )
-texture = ExtResource( 4 )
-flip_h = true
-
-[node name="Rock 5" type="Sprite" parent="Sprites"]
-
-transform/pos = Vector2( -50, -8 )
+transform/pos = Vector2( 6, 10 )
 texture = ExtResource( 4 )
 flip_h = true
 
-[node name="Rock 6" type="Sprite" parent="Sprites"]
+[node name="Rock 5" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -52, -2 )
+transform/pos = Vector2( -8, 4 )
+texture = ExtResource( 4 )
+flip_h = true
+
+[node name="Rock 6" type="Sprite" parent="Sprites/RockFormation"]
+
+transform/pos = Vector2( -10, 10 )
 texture = ExtResource( 5 )
 
-[node name="Rock 7" type="Sprite" parent="Sprites"]
+[node name="Rock 7" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -28, -4 )
+transform/pos = Vector2( 14, 8 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Rock 8" type="Sprite" parent="Sprites"]
+[node name="Rock 8" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( -42, -4 )
+transform/pos = Vector2( 0, 8 )
 texture = ExtResource( 4 )
 
 [node name="Flower" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 10, 0 )
+transform/pos = Vector2( 148, 40.75 )
 texture = ExtResource( 6 )
 
 [node name="Flower 2" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -98, 86 )
+transform/pos = Vector2( 36, 128 )
 texture = ExtResource( 6 )
 
 [node name="Flower 3" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -40, 92 )
+transform/pos = Vector2( 98, 134 )
 texture = ExtResource( 7 )
 
 [node name="Fence" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( -42, 0 )
+transform/pos = Vector2( 96, 40.5 )
 texture = ExtResource( 8 )
 region = true
 region_rect = Rect2( 0, 0, 64, 16 )
@@ -118,7 +126,7 @@ region_rect = Rect2( 0, 0, 64, 16 )
 
 visibility/self_opacity = 0.0
 transform/pos = Vector2( -8, 24 )
-polygon = Vector2Array( 188, 220, 156, 268, 162, 322, 192, 342, 248, 346, 288, 332, 324, 284, 388, 236, 548, 228, 716, 260, 744, 260, 784, 244, 796, 202, 793, 190, 786, 184.5, 768, 180, 704, 204, 264, 200 )
+polygon = Vector2Array( 188, 220, 156, 268, 162, 322, 192, 342, 248, 346, 288, 332, 324, 284, 388, 236, 548, 228, 716, 260, 744, 260, 784, 244, 936, 216, 904, 160, 768, 180, 704, 204, 264, 200 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -130,7 +138,7 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
 border_overlap = 16
 border_textures = ExtResource( 12 )
@@ -144,8 +152,7 @@ smooth_level = 0.4
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-transform/pos = Vector2( -128, 24 )
-polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 552, 408, 520, 432, 568, 456, 600, 424, 652, 428, 720, 432 )
+polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 552, 408, 528, 416, 520, 456, 552, 464, 600, 424, 652, 428, 720, 432 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -157,7 +164,7 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
 border_overlap = 16
 border_textures = ExtResource( 12 )
@@ -171,7 +178,6 @@ smooth_level = 0.4
 [node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-transform/pos = Vector2( -20, -8 )
 polygon = Vector2Array( 336, 676, 84, 664, 60, 632, 56, 604, 72, 580, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1071, 555, 1092, 588, 1095, 627, 1086, 646, 1056, 664 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
@@ -184,7 +190,7 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
 border_overlap = 16
 border_textures = ExtResource( 12 )
