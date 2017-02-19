@@ -147,8 +147,7 @@ border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
-smooth_level = 1.0
-smooth_max_nodes = 100
+smooth_level = 0.4
 smooth_max_angle = 90
 
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
@@ -175,14 +174,13 @@ border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
-smooth_level = 1.0
-smooth_max_nodes = 50
+smooth_level = 0.4
 smooth_max_angle = 90
 
 [node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-polygon = Vector2Array( 336, 676, 84, 664, 60, 632, 56, 604, 72, 580, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1071, 555, 1092, 588, 1095, 627, 1086, 646, 1056, 664 )
+polygon = Vector2Array( -48, 632, -16, 592, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1056, 616 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -204,7 +202,6 @@ border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
 smooth_level = 0.4
-smooth_max_nodes = 50
 smooth_max_angle = 90
 
 

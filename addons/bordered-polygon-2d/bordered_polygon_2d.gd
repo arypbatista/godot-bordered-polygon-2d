@@ -32,7 +32,6 @@ export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_textu
 export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
 export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
 export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
-export (int, 0, 200) var smooth_max_nodes = 100 setget set_smooth_max_nodes
 export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
 
 const QUAD_TOP_1    = 1
@@ -43,6 +42,7 @@ const QUAD_BOTTOM_2 = 2
 const SMOOTH_MAX_PASSES = 5
 const SMOOTH_MIN_ANGLE = PI*0.08
 const SMOOTH_MIN_ANGLE_GAIN = PI*0.08
+const SMOOTH_MAX_NODES_PER_FACE = 10
 
 var inner_polygon = null
 
@@ -156,12 +156,8 @@ func set_smooth_level(value):
 	smooth_level = value
 	update()
 
-func set_smooth_max_nodes(value):
-	smooth_max_nodes = value
-	update()
-
 func get_smooth_max_nodes():
-	return smooth_max_nodes * smooth_level
+	return get_polygon().size() * SMOOTH_MAX_NODES_PER_FACE * smooth_level
 
 func set_smooth_max_angle(value):
 	smooth_max_angle = value
