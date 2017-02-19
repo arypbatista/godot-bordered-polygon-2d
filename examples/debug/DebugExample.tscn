@@ -9,8 +9,7 @@
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-transform/pos = Vector2( -196, 24 )
-polygon = Vector2Array( 524, 420, 336, 184, 660, 164, 936, 192, 940, 248, 688, 320, 756, 452 )
+polygon = Vector2Array( 152, 304, 88, 192, 168, 136, 384, 184, 584, 128, 720, 216, 984, 280, 1000, 432, 680, 472, 328, 448, 280, 328 )
 uv = Vector2Array(  )
 color = Color( 0.515625, 0.515625, 0.515625, 0 )
 vertex_colors = ColorArray(  )
@@ -31,6 +30,8 @@ border_texture = ExtResource( 3 )
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
-smooth_level = 0.4
+smooth_level = 1.0
+smooth_max_nodes = 50
+smooth_max_angle = 90
 
 

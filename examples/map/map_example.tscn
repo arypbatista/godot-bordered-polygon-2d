@@ -126,7 +126,7 @@ region_rect = Rect2( 0, 0, 64, 16 )
 
 visibility/self_opacity = 0.0
 transform/pos = Vector2( -8, 24 )
-polygon = Vector2Array( 188, 220, 156, 268, 162, 322, 192, 342, 248, 346, 288, 332, 324, 284, 388, 236, 548, 228, 716, 260, 744, 260, 784, 244, 936, 216, 904, 160, 768, 180, 704, 204, 264, 200 )
+polygon = Vector2Array( 136, 248, 160, 344, 264, 368, 320, 288, 440, 272, 592, 232, 716, 260, 896, 240, 936, 200, 904, 136, 784, 168, 576, 200, 224, 200 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -147,12 +147,14 @@ border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
-smooth_level = 0.4
+smooth_level = 1.0
+smooth_max_nodes = 100
+smooth_max_angle = 90
 
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-polygon = Vector2Array( 776, 432, 816, 424, 820, 396, 796, 380, 716, 404, 644, 396, 588, 404, 552, 408, 528, 416, 520, 456, 552, 464, 600, 424, 652, 428, 720, 432 )
+polygon = Vector2Array( 816, 424, 796, 380, 716, 404, 552, 400, 512, 416, 520, 448, 552, 464, 720, 440, 776, 448 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -173,7 +175,9 @@ border_texture = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
-smooth_level = 0.4
+smooth_level = 1.0
+smooth_max_nodes = 50
+smooth_max_angle = 90
 
 [node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
 
@@ -200,5 +204,7 @@ border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
 smooth_level = 0.4
+smooth_max_nodes = 50
+smooth_max_angle = 90
 
 
