@@ -351,10 +351,13 @@ func calculate_quad(index, points, border_points_count):
 	]
 
 	# If quad twisted
-	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
-	if intersect_point != null:
+	var intersect_point_1 = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
+	var intersect_point_2 = Geometry.segment_intersects_segment_2d(quad[1], quad[0], quad[2], quad[3])	
+	if intersect_point_1 != null:
 		quad = [quad[1], quad[0], quad[2], quad[3]]
-
+	if intersect_point_2 != null:
+		quad = [quad[2], quad[3], quad[1], quad[0]]
+	
 	return quad
 
 func is_shape(shape_points):
