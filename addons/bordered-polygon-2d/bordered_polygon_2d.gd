@@ -103,6 +103,7 @@ func create_inner_polygon():
 	p.set_color(get_color())
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_polygon(get_polygon())
+	p.set_material(get_material())
 	set_inner_polygon_node(p)
 
 func set_inner_polygon_node(polygon):
