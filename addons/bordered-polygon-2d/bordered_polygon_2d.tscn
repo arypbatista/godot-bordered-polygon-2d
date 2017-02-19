@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=1]
 
-[ext_resource path="res://nodes/masking/BorderedPolygon2D.tres.gd" type="Script" id=1]
+[ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=1]
 
 [node name="BorderedPolygon2D" type="Polygon2D"]
 
+visibility/self_opacity = 0.0
 polygon = Vector2Array(  )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
@@ -16,13 +17,15 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 1 )
-borderSize = 50
-borderOverlap = 25
-borderTextures = null
+border_size = 50
+border_overlap = 25
+border_textures = null
 border_clockwise_shift = 0
-borderTexture = null
-textureScale = Vector2( 1, 1 )
-textureOffset = Vector2( 0, 0 )
-textureRotation = 0.0
+border_texture = null
+border_texture_scale = Vector2( 1, 1 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 0.0
+smooth_level = 0.0
+smooth_max_angle = 90
 
 

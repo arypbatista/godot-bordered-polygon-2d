@@ -32,6 +32,7 @@ export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_textu
 export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
 export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
 export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
+export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
 
 const QUAD_TOP_1    = 1
 const QUAD_TOP_2    = 0
@@ -40,7 +41,8 @@ const QUAD_BOTTOM_2 = 2
 
 const SMOOTH_MAX_PASSES = 5
 const SMOOTH_MIN_ANGLE = PI*0.08
-const SMOOTH_MAX_ANGLE = PI/2
+const SMOOTH_MIN_ANGLE_GAIN = PI*0.08
+const SMOOTH_MAX_NODES_PER_FACE = 10
 
 var inner_polygon = null
 
@@ -108,7 +110,7 @@ func create_inner_polygon():
 
 func set_inner_polygon_node(polygon):
 	if inner_polygon != null:
-		inner_polygon.queue_free()
+		inner_polygon.free()
 	inner_polygon = polygon
 	add_child(inner_polygon)
 
@@ -155,9 +157,18 @@ func set_smooth_level(value):
 	smooth_level = value
 	update()
 
-func get_max_angle_smooth():
-	var smooth_range = SMOOTH_MAX_ANGLE - SMOOTH_MIN_ANGLE
-	return abs(smooth_range * (1.0 - smooth_level) + SMOOTH_MIN_ANGLE)
+func get_smooth_max_nodes():
+	return get_polygon().size() * SMOOTH_MAX_NODES_PER_FACE * smooth_level
+
+func set_smooth_max_angle(value):
+	smooth_max_angle = value
+	update()
+
+func get_smooth_max_angle():
+	#var smooth_range = smooth_max_angle - SMOOTH_MIN_ANGLE
+	#return abs(smooth_range * smooth_level + SMOOTH_MIN_ANGLE)
+	# Input angle is in degrees
+	return deg2rad(smooth_max_angle)
 
 func triad_angle(a, b, c):
 	var vector_ab = (b - a).normalized()
@@ -165,22 +176,34 @@ func triad_angle(a, b, c):
 	return vector_ab.angle_to(vector_bc)
 
 func smooth_shape_points(shape_points, max_angle):
+	var original_points_count = shape_points.size()
+	var new_smooth_points_count = 0
 	for i in range(SMOOTH_MAX_PASSES): # max passes
 		var point_to_smooth = []
 		var angles_smoothed_this_round = 0
 		var current_shape_size = shape_points.size()
 
+		var round_new_points_count = 0
 		for i in range(shape_points.size()):
 			# b is the point to be smoothen
 			# a and c are adyacent points
 			var a = shape_points[(i + current_shape_size - 1) % current_shape_size]
 			var b = shape_points[i]
 			var c = shape_points[(i + 1) % current_shape_size]
-
-			if abs(triad_angle(a, b, c)) > max_angle:
+			var triad_angle = abs(triad_angle(a, b, c))
+			if triad_angle < max_angle:
 				var smoothed_points = smooth_three_points(a, b, c)
-				point_to_smooth.append([i, smoothed_points])
+				var obtained_angle = abs(triad_angle(smoothed_points[0], smoothed_points[1], smoothed_points[2]))
+				var angle_gain = triad_angle - obtained_angle
+				if angle_gain > SMOOTH_MIN_ANGLE_GAIN:
+					round_new_points_count += smoothed_points.size()
+					point_to_smooth.append([i, smoothed_points])
 
+		if new_smooth_points_count + round_new_points_count >= get_smooth_max_nodes():
+			break
+		else:
+			new_smooth_points_count += round_new_points_count
+			
 		var num_added_points = 0
 		for point_info in point_to_smooth:
 			shape_points.remove(point_info[0] + num_added_points)
@@ -245,7 +268,7 @@ func add_border(border):
 
 func remove_borders():
 	for border in borders:
-		border.queue_free()
+		border.free()
 	borders = []
 
 func possitive_angle(angle):
@@ -329,10 +352,13 @@ func calculate_quad(index, points, border_points_count):
 	]
 
 	# If quad twisted
-	var intersect_point = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
-	if intersect_point != null:
+	var intersect_point_1 = Geometry.segment_intersects_segment_2d(quad[0], quad[3], quad[1], quad[2])
+	var intersect_point_2 = Geometry.segment_intersects_segment_2d(quad[1], quad[0], quad[2], quad[3])	
+	if intersect_point_1 != null:
 		quad = [quad[1], quad[0], quad[2], quad[3]]
-
+	if intersect_point_2 != null:
+		quad = [quad[2], quad[3], quad[1], quad[0]]
+	
 	return quad
 
 func is_shape(shape_points):
@@ -371,7 +397,7 @@ func make_border(border_size):
 	if not is_clockwise_shape(shape_points):
 		shape_points.invert()
 	if smooth_level > 0:
-		shape_points = smooth_shape_points(shape_points, get_max_angle_smooth())
+		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
 	set_inner_polygon(shape_points)
 
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
