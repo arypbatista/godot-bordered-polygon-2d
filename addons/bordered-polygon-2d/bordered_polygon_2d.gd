@@ -1,6 +1,5 @@
 tool
-# Original code by Jonathan T. Arnold
-# Modifications by Ary Pablo Batista
+# Authors: Jonathan T. Arnold and Ary Pablo Batista
 
 #!!!!!!!! to make borders work you must turn on repeat on textures
 
@@ -28,6 +27,7 @@ export (TileSet) var border_textures = null setget set_border_textures
 export (int) var border_clockwise_shift = 0 setget set_border_clockwise_shift
 
 export (Texture) var border_texture = null setget set_border_texture
+export (CanvasItemMaterial) var border_material = null setget set_border_material
 export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
 export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
 export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
@@ -139,6 +139,10 @@ func set_border_texture_scale(value):
 
 func set_border_texture_rotation(value):
 	border_texture_rotation = value
+	update()
+
+func set_border_material(value):
+	border_material = value
 	update()
 
 func set_border_texture(value):
@@ -314,15 +318,6 @@ func has_single_border_texture():
 func has_tileset_border_textures():
 	return border_textures != null and tileset_size(border_textures) >= 1
 
-func get_border_texture_for_angle(angle):
-	var texture = null
-	if has_tileset_border_textures():
-		var texture_idx = texture_idx_from_angle(border_textures, angle)
-		texture = get_border_texture(texture_idx)
-	else:
-		texture = border_texture
-	return texture
-
 func invert_scale(scale):
 	return Vector2(1/scale.x, 1/scale.y)
 
@@ -333,13 +328,19 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	border.set_polygon(quad)
 	border.set_texture_offset(offset)
 
-	var tex = get_border_texture_for_angle(border_angle)
+	var tex_idx = 0
+	if border_textures != null:
+		tex_idx = get_border_texture(texture_idx_from_angle(border_textures, border_angle))
+	
+	var tex = get_border_texture()
 	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 	border.set_texture(tex)
-
+	border.set_material(get_border_material(tex_idx))
+	
 	var texture_rotation = deg2rad(border_texture_rotation) + PI
 	border.set_texture_rotation(texture_rotation)
 	border.set_texture_scale(invert_scale(border_texture_scale))
+	
 	return border
 
 func calculate_quad(index, points, border_points_count):
@@ -377,7 +378,13 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 	border_inner_points.append(border_outer_points[0] + Vector2(0, 0.0001))
 	return border_inner_points
 
-func get_border_texture(idx):
+func get_border_material(idx):
+	if border_textures != null:
+		return border_textures.tile_get_material(idx)
+	else:
+		return border_material
+
+func get_border_texture(idx=0):
 	if border_textures != null:
 		return border_textures.tile_get_texture(idx)
 	else:
