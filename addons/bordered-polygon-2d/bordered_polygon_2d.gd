@@ -264,7 +264,7 @@ func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
 		var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
 		var newVector = (a_90 + c_90).normalized() * 1 * amount  + b
 		output_points.append(newVector)
-	return output_points
+	return Vector2Array(output_points)
 
 func add_border(border):
 	add_child(border)
@@ -330,12 +330,12 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 
 	var tex_idx = 0
 	if border_textures != null:
-		tex_idx = get_border_texture(texture_idx_from_angle(border_textures, border_angle))
-	
+		tex_idx = get_border_texture(texture_idx_from_angle(border_textures, border_angle))	
 	var tex = get_border_texture()
 	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 	border.set_texture(tex)
-	border.set_material(get_border_material(tex_idx))
+	if border_material != null:
+		border.set_material(get_border_material(tex_idx))
 	
 	var texture_rotation = deg2rad(border_texture_rotation) + PI
 	border.set_texture_rotation(texture_rotation)
@@ -366,10 +366,9 @@ func is_shape(shape_points):
 	return shape_points.size() >= 3
 
 func calculate_border_points(shape_points, border_size, border_overlap=0):
-	var border_inner_points = expand_or_contract_shape_points(shape_points, - border_overlap)
-	var border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size - border_overlap)
+	var border_inner_points = expand_or_contract_shape_points(shape_points, -border_overlap)
+	var border_outer_points = expand_or_contract_shape_points(border_inner_points, -(border_size - border_overlap))
 
-	border_inner_points = bytes2var(var2bytes(border_inner_points))
 	# close outer shape
 	border_inner_points.append(border_inner_points[0] + Vector2(0.0001, 0))
 	for i in range(border_outer_points.size()):
@@ -401,12 +400,13 @@ func max_quad_width(quad):
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points = get_polygon()
+	var inner_poly_points = expand_or_contract_shape_points(shape_points, -(border_overlap + border_size))
+	set_inner_polygon(inner_poly_points)
+		
 	if not is_clockwise_shape(shape_points):
-		shape_points.invert()
+		shape_points.invert()	
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
-	set_inner_polygon(shape_points)
-
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 
 	# Turn points to quads
@@ -421,7 +421,6 @@ func make_border(border_size):
 		var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
 		lastborder_texture_offset = width + lastborder_texture_offset
 		add_border(border)
-
 
 func update_borders():
 	# Remove old borders
