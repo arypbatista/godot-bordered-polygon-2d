@@ -366,8 +366,8 @@ func is_shape(shape_points):
 	return shape_points.size() >= 3
 
 func calculate_border_points(shape_points, border_size, border_overlap=0):
-	var border_inner_points = expand_or_contract_shape_points(shape_points, -border_overlap)
-	var border_outer_points = expand_or_contract_shape_points(border_inner_points, -(border_size - border_overlap))
+	var border_inner_points = shape_points
+	var border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size)
 
 	# close outer shape
 	border_inner_points.append(border_inner_points[0] + Vector2(0.0001, 0))
@@ -400,13 +400,16 @@ func max_quad_width(quad):
 func make_border(border_size):
 	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points = get_polygon()
-	var inner_poly_points = expand_or_contract_shape_points(shape_points, -(border_overlap + border_size))
-	set_inner_polygon(inner_poly_points)
 		
 	if not is_clockwise_shape(shape_points):
-		shape_points.invert()	
+		shape_points.invert()
+
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
+		
+	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_overlap + border_size)
+	set_inner_polygon(inner_poly_points)
+		
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 
 	# Turn points to quads
