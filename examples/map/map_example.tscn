@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://examples/map/tiles/tile136.png" type="Texture" id=1]
 [ext_resource path="res://examples/map/tiles/tile016.png" type="Texture" id=2]
@@ -8,10 +8,7 @@
 [ext_resource path="res://examples/map/tiles/tile099.png" type="Texture" id=6]
 [ext_resource path="res://examples/map/tiles/tile116.png" type="Texture" id=7]
 [ext_resource path="res://examples/map/tiles/tile049.png" type="Texture" id=8]
-[ext_resource path="res://examples/map/tiles/tile028.png" type="Texture" id=9]
-[ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=10]
-[ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=11]
-[ext_resource path="res://examples/map/border_tileset.tres" type="TileSet" id=12]
+[ext_resource path="res://examples/map/Platform.tscn" type="PackedScene" id=9]
 
 [node name="MapExample" type="Node2D"]
 
@@ -122,89 +119,18 @@ texture = ExtResource( 8 )
 region = true
 region_rect = Rect2( 0, 0, 64, 16 )
 
-[node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
+[node name="BorderedPolygon2D5" parent="." instance=ExtResource( 9 )]
 
-visibility/self_opacity = 0.0
-transform/pos = Vector2( -8, 24 )
-polygon = Vector2Array( 136, 248, 160, 344, 264, 368, 320, 288, 440, 272, 592, 232, 716, 260, 896, 240, 936, 200, 904, 136, 784, 168, 576, 200, 224, 200 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 9 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 10 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
-border_size = 64
-border_overlap = 16
-border_textures = ExtResource( 12 )
-border_clockwise_shift = 0
-border_texture = null
-border_material = null
-border_texture_scale = Vector2( 4, 4 )
-border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 0.0
-smooth_level = 0.4
-smooth_max_angle = 90
+polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 824, 296, 704, 280, 616, 256, 360, 256, 264, 280, 200, 328, 144, 320 )
 
-[node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
+[node name="BorderedPolygon2D3" parent="." instance=ExtResource( 9 )]
 
-visibility/self_opacity = 0.0
-polygon = Vector2Array( 816, 424, 796, 380, 716, 404, 552, 400, 512, 416, 520, 448, 552, 464, 720, 440, 776, 448 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 9 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 10 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
-border_size = 64
-border_overlap = 16
-border_textures = ExtResource( 12 )
-border_clockwise_shift = 0
-border_texture = null
-border_material = null
-border_texture_scale = Vector2( 4, 4 )
-border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 0.0
-smooth_level = 0.4
-smooth_max_angle = 90
+polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 648, 408, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
+smooth_level = 1.0
+smooth_max_angle = 120
 
-[node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
+[node name="BorderedPolygon2D4" parent="." instance=ExtResource( 9 )]
 
-visibility/self_opacity = 0.0
-polygon = Vector2Array( -48, 632, -16, 592, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1056, 616 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 9 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 10 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
-border_size = 64
-border_overlap = 16
-border_textures = ExtResource( 12 )
-border_clockwise_shift = 0
-border_texture = null
-border_material = null
-border_texture_scale = Vector2( 4, 4 )
-border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 0.0
-smooth_level = 0.4
-smooth_max_angle = 90
+polygon = Vector2Array( -64, 640, -32, 528, 160, 576, 320, 600, 584, 584, 784, 576, 960, 544, 1064, 576, 1064, 624 )
 
 

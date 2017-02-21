@@ -272,6 +272,7 @@ func add_border(border):
 
 func remove_borders():
 	for border in borders:
+		remove_child(border)
 		border.free()
 	borders = []
 
@@ -330,8 +331,8 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 
 	var tex_idx = 0
 	if border_textures != null:
-		tex_idx = get_border_texture(texture_idx_from_angle(border_textures, border_angle))	
-	var tex = get_border_texture()
+		tex_idx = texture_idx_from_angle(border_textures, border_angle)
+	var tex = get_border_texture(tex_idx)
 	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 	border.set_texture(tex)
 	if border_material != null:
@@ -398,7 +399,6 @@ func max_quad_width(quad):
 	return max(top_width, bottom_width)
 
 func make_border(border_size):
-	var border_offset = Vector2(0, border_overlap * -1)
 	var shape_points = get_polygon()
 		
 	if not is_clockwise_shape(shape_points):
@@ -407,7 +407,7 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
 		
-	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_overlap + border_size)
+	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_size - border_overlap)
 	set_inner_polygon(inner_poly_points)
 		
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
