@@ -327,7 +327,7 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
 		
-	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_size - border_overlap)
+	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_size + border_overlap)
 	set_inner_polygon(inner_poly_points)
 		
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
