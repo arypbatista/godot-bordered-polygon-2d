@@ -46,11 +46,14 @@ func cross_product_z(a, b):
 	return a.x * b.y - a.y * b.x
 
 func is_clockwise_shape(shape):
-	if shape.size() >= 3:
-		var v0_to_1 = shape[1] - shape[0]
-		var v0_to_2 = shape[2] - shape[0]
-		var res = cross_product_z(v0_to_1, v0_to_2)
-		return res > 0
+	var shape_size = shape.size()
+	if shape_size >= 3:
+		var total = 0 
+		for i in range(shape_size):
+			var res = cross_product_z(shape[i], shape[(i + 1) % shape_size])
+			total += res
+		print(total)
+		return total > 0
 	else:
 		return false
 
@@ -68,7 +71,6 @@ func create_inner_polygon():
 	p.set_uv(get_uv())
 	p.set_color(get_color())
 	p.set_vertex_colors(get_vertex_colors())
-	p.set_polygon(get_polygon())
 	p.set_material(get_material())
 	set_inner_polygon_node(p)
 
@@ -143,23 +145,13 @@ func smooth_shape_points(shape_points, max_angle):
 	return shape_points
 
 func smooth_three_points(a, b, c):
-	var convex_triad = triad_angle(a,b,c) > 0
-	var rotation
-	if convex_triad:
-		rotation = PI
-	else:
-		rotation = 0
-
 	var vector_ba = a - b
 	var vector_bc = c - b
 
 	var splitted_b = [
-		b + vector_ba.normalized().rotated(rotation) * (vector_ba.length()/4),
-		b + vector_bc.normalized().rotated(rotation) * (vector_bc.length()/4)
+		b + vector_ba.normalized() * (vector_ba.length()/4),
+		b + vector_bc.normalized() * (vector_bc.length()/4)
 	]
-
-	if convex_triad:
-		splitted_b.invert()
 
 	var output_points = []
 	output_points.append(a)
@@ -169,22 +161,52 @@ func smooth_three_points(a, b, c):
 
 	return output_points
 
-func expand_or_contract_shape_points(shape_points, amount, offset=Vector2(0,0)):
-	var points_count = shape_points.size()
-	var expand_or_contract_amount = 0.0
-	var output_points = []
-	for i in range(points_count):
-		var a = shape_points[(i + points_count - 1) % points_count]
-		var b = shape_points[i]
-		var c = shape_points[(i + 1) % points_count]
-		# get normals
-		var subtractA_B = (b - a).normalized()
-		var subtractC_B = (c - b).normalized()
-		var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
-		var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
-		var newVector = (a_90 + c_90).normalized() * 1 * amount  + b
-		output_points.append(newVector)
-	return Vector2Array(output_points)
+func expand_or_contract_shape_points(shape_points, amount, advance=true):
+		var points_count = shape_points.size()
+		var expand_or_contract_amount = 0.0
+		var output_points = []
+		var point_normals = []
+			
+		for i in range(points_count):
+			var a = shape_points[(i + points_count - 1) % points_count]
+			var b = shape_points[i]
+			var c = shape_points[(i + 1) % points_count]
+			# get normals
+			var subtractA_B = (b - a).normalized()
+			var subtractC_B = (c - b).normalized()
+			var a_90 = Vector2(subtractA_B.y, -subtractA_B.x)
+			var c_90 = Vector2(subtractC_B.y, -subtractC_B.x)
+
+			point_normals.append((a_90 + c_90).normalized()) 
+
+		if advance == true:
+			for test_point in range(points_count):
+				var closet_point
+				var closest_distance = abs(amount)
+				var test_normal = [shape_points[test_point],shape_points[test_point] + point_normals[test_point] * (amount*2)]
+		
+				for wall in range(points_count):
+					if wall != test_point and wall != (test_point + 1) % points_count:
+						var top_wall = [shape_points[wall], shape_points[(wall + 1) % points_count]]
+						# get wall intersection
+						var normal_and_wall_intersect = Geometry.segment_intersects_segment_2d(test_normal[0], test_normal[1], top_wall[0], top_wall[1])
+						if normal_and_wall_intersect != null :
+							var distance_from_test_point_to_intersetion = shape_points[test_point].distance_to(normal_and_wall_intersect)
+							if closest_distance > distance_from_test_point_to_intersetion:
+								closest_distance = distance_from_test_point_to_intersetion
+								closet_point = normal_and_wall_intersect
+			
+				var newVector
+				if closest_distance > abs(amount):
+					newVector = closet_point + point_normals[test_point]
+				else:
+					newVector = point_normals[test_point] * amount + shape_points[test_point]
+				output_points.append(newVector)
+		else:
+			for i in range(points_count):
+				output_points.append(point_normals[i] * amount + shape_points[i])
+
+		return Vector2Array(output_points)
 
 func add_border(border):
 	add_child(border)
@@ -320,16 +342,14 @@ func max_quad_width(quad):
 
 func make_border(border_size):
 	var shape_points = get_polygon()
-		
+	
 	if not is_clockwise_shape(shape_points):
 		shape_points.invert()
 
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
-		
-	var inner_poly_points = expand_or_contract_shape_points(shape_points, border_size + border_overlap)
-	set_inner_polygon(inner_poly_points)
-		
+	
+	set_inner_polygon(expand_or_contract_shape_points(shape_points, border_size + border_overlap))
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 
 	# Turn points to quads
