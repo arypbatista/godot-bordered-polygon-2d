@@ -168,8 +168,6 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 		var expand_or_contract_amount = 0.0
 		var output_points = []
 		var point_normals = []
-		if amount == 0:
-			amount = 1
 			
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
@@ -187,7 +185,7 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 			for test_point in range(points_count):
 				var closet_point
 				var closest_distance = abs(amount)
-				var test_normal = [shape_points[test_point], amount/amount * amount * point_normals[test_point] + shape_points[test_point]]				
+				var test_normal = [shape_points[test_point], amount * point_normals[test_point] + shape_points[test_point]]				
 				for wall in range(points_count):
 					if wall != test_point:
 						var top_wall = [shape_points[wall],shape_points[(wall + 1) % points_count]]
