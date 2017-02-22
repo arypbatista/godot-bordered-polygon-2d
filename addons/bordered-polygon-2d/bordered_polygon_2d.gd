@@ -22,6 +22,8 @@ onready var _is_ready = true
 
 var borders = []
 
+var editor_polygon_color = Color("ffffff")
+
 func tileset_size(tileset):
 	return tileset.get_tiles_ids().size()
 
@@ -69,7 +71,7 @@ func create_inner_polygon():
 	p.set_texture_rotation(get_texture_rotation())
 	p.set_texture_offset(get_texture_offset())
 	p.set_uv(get_uv())
-	p.set_color(get_color())
+	p.set_color(editor_polygon_color)
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_material(get_material())
 	set_inner_polygon_node(p)
@@ -166,6 +168,8 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 		var expand_or_contract_amount = 0.0
 		var output_points = []
 		var point_normals = []
+		if amount == 0:
+			amount = 1
 			
 		for i in range(points_count):
 			var a = shape_points[(i + points_count - 1) % points_count]
@@ -365,10 +369,18 @@ func make_border(border_size):
 		add_border(border)
 
 func update_borders():
+	# store editor polygon color
+	if editor_polygon_color != Color("00ffffff"):
+		editor_polygon_color = get_color()
+	
 	# Remove old borders
 	remove_borders()
 	if is_shape(get_polygon()) and has_border_textures():
 		make_border(border_size)
+	
+	# hide control polygon when running
+	if get_tree().is_editor_hint() == false:
+		set_color("00ffffff")
 
 func _ready():
 	update()
