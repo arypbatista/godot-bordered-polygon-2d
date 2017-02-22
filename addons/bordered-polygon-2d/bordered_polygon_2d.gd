@@ -183,25 +183,24 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 			for test_point in range(points_count):
 				var closet_point
 				var closest_distance = abs(amount)
-				var test_normal = [shape_points[test_point],shape_points[test_point] + point_normals[test_point] * (amount*2)]
-		
+				var test_normal = [shape_points[test_point], amount/amount * amount * point_normals[test_point] + shape_points[test_point]]				
 				for wall in range(points_count):
-					if wall != test_point and wall != (test_point + 1) % points_count:
-						var top_wall = [shape_points[wall], shape_points[(wall + 1) % points_count]]
+					if wall != test_point:
+						var top_wall = [shape_points[wall],shape_points[(wall + 1) % points_count]]
 						# get wall intersection
 						var normal_and_wall_intersect = Geometry.segment_intersects_segment_2d(test_normal[0], test_normal[1], top_wall[0], top_wall[1])
 						if normal_and_wall_intersect != null :
 							var distance_from_test_point_to_intersetion = shape_points[test_point].distance_to(normal_and_wall_intersect)
-							if closest_distance > distance_from_test_point_to_intersetion:
+							if distance_from_test_point_to_intersetion < closest_distance and distance_from_test_point_to_intersetion != 0:
 								closest_distance = distance_from_test_point_to_intersetion
-								closet_point = normal_and_wall_intersect
-			
+								closet_point =  normal_and_wall_intersect 
+								
 				var newVector
-				if closest_distance > abs(amount):
-					newVector = closet_point + point_normals[test_point]
+				if closest_distance != abs(amount):
+					newVector = closet_point 
 				else:
 					newVector = point_normals[test_point] * amount + shape_points[test_point]
-				output_points.append(newVector)
+				output_points.append(newVector)	
 		else:
 			for i in range(points_count):
 				output_points.append(point_normals[i] * amount + shape_points[i])
