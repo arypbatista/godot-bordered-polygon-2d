@@ -54,7 +54,6 @@ func is_clockwise_shape(shape):
 		for i in range(shape_size):
 			var res = cross_product_z(shape[i], shape[(i + 1) % shape_size])
 			total += res
-		print(total)
 		return total > 0
 	else:
 		return false
