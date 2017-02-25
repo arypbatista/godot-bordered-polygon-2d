@@ -281,8 +281,7 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	var tex = get_border_texture(tex_idx)
 	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 	border.set_texture(tex)
-	if border_material != null:
-		border.set_material(get_border_material(tex_idx))
+	border.set_material(get_border_material(tex_idx))
 	
 	var texture_rotation = deg2rad(border_texture_rotation) + PI
 	border.set_texture_rotation(texture_rotation)
@@ -324,11 +323,11 @@ func calculate_border_points(shape_points, border_size, border_overlap=0):
 	border_inner_points.append(border_outer_points[0] + Vector2(0, 0.0001))
 	return border_inner_points
 
-func get_border_material(idx):
-	if border_textures != null:
-		return border_textures.tile_get_material(idx)
-	else:
-		return border_material
+func get_border_material(idx=null):
+	var material = border_material
+	if idx != null and border_textures != null and border_textures.tile_get_material(idx) != null:
+		material = border_textures.tile_get_material(idx)
+	return material
 
 func get_border_texture(idx=0):
 	if border_textures != null:
