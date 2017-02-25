@@ -2,7 +2,7 @@
 
 Add borders to your Polygon2Ds. Useful for creating maps using textures.
 
-![Preview](./docs/images/preview.png)
+![Preview](./docs/images/preview2.png)
 
 ## Usage
 
