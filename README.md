@@ -13,7 +13,7 @@ Create a `BorderedPolygon2D` node in your scene.
 Attach either a single border texture or a TileSet with several border texures.
 You might need to use options to proper align/rotate/scale texture.
 
-![Usage 2](./docs/images/usage3.png)
+![Usage 2](./docs/images/usage2.png)
 
 Draw your polygon and voilà!
 
