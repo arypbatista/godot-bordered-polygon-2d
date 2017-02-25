@@ -20,14 +20,11 @@ var clockwise = null
 
 var borders = []
 
-var editor_polygon_color = Color("ffffff")
-
 func tileset_size(tileset):
 	return tileset.get_tiles_ids().size()
 
 func update():
 	if is_ready():
-		# We only use polygon for edition purposes
 		update_borders()
 		update_opacity()
 
@@ -364,18 +361,10 @@ func make_border(border_size):
 		add_border(border)
 
 func update_borders():
-	# store editor polygon color
-	if editor_polygon_color != Color("00ffffff"):
-		editor_polygon_color = get_color()
-	
 	# Remove old borders
 	remove_borders()
 	if is_shape(get_polygon()) and has_border_textures():
 		make_border(border_size)
-
-	# hide control polygon when running
-	if not get_tree().is_editor_hint():
-		set_color(Color("00ffffff"))
 
 func update_opacity():
 	var opacity = calculate_opacity()
@@ -383,6 +372,10 @@ func update_opacity():
 		update_polygon_opacity(inner_polygon, opacity)
 	for border in borders:
 		update_polygon_opacity(border, opacity)
+	hide_editor_polygon()
+
+func hide_editor_polygon():
+	set_color('#00ffffff', false)
 
 func calculate_opacity():
 	var current = self

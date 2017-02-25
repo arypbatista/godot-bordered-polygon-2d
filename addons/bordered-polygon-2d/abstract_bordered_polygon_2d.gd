@@ -38,8 +38,16 @@ export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
 
 onready var _is_ready = true
 
+onready var editor_polygon_color = get_color()
+
 func is_ready():
 	return _is_ready
+
+func set_color(value, is_editor_polygon_color=true):
+	.set_color(value)
+	if is_editor_polygon_color:
+		editor_polygon_color = value
+		update()
 
 func set_opacity(value):
 	.set_opacity(value)
