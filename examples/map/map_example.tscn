@@ -1,20 +1,26 @@
 [gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://examples/map/tiles/tile136.png" type="Texture" id=1]
-[ext_resource path="res://examples/map/tiles/tile016.png" type="Texture" id=2]
-[ext_resource path="res://examples/map/tiles/tile084.png" type="Texture" id=3]
-[ext_resource path="res://examples/map/tiles/tile118.png" type="Texture" id=4]
-[ext_resource path="res://examples/map/tiles/tile101.png" type="Texture" id=5]
-[ext_resource path="res://examples/map/tiles/tile099.png" type="Texture" id=6]
-[ext_resource path="res://examples/map/tiles/tile116.png" type="Texture" id=7]
-[ext_resource path="res://examples/map/tiles/tile049.png" type="Texture" id=8]
-[ext_resource path="res://examples/map/platform.tscn" type="PackedScene" id=9]
+[ext_resource path="res://examples/map/platform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://examples/map/tiles/tile016.png" type="Texture" id=3]
+[ext_resource path="res://examples/map/tiles/tile084.png" type="Texture" id=4]
+[ext_resource path="res://examples/map/tiles/tile118.png" type="Texture" id=5]
+[ext_resource path="res://examples/map/tiles/tile101.png" type="Texture" id=6]
+[ext_resource path="res://examples/map/tiles/tile099.png" type="Texture" id=7]
+[ext_resource path="res://examples/map/tiles/tile116.png" type="Texture" id=8]
+[ext_resource path="res://examples/map/tiles/tile049.png" type="Texture" id=9]
 
 [node name="MapExample" type="Node2D"]
 
 __meta__ = { "_edit_lock_":true }
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Layer" type="Node2D" parent="Background"]
+
+editor/display_folded = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Background/Layer"]
 
 polygon = Vector2Array( -320, -192, 1344, -192, 1344, 832, -320, 832 )
 uv = Vector2Array(  )
@@ -29,6 +35,18 @@ invert/enable = false
 invert/border = 100.0
 __meta__ = { "_edit_lock_":true }
 
+[node name="Layer2" type="Node2D" parent="Background"]
+
+visibility/opacity = 0.2
+
+[node name="BorderedPolygon2D6" parent="Background/Layer2" instance=ExtResource( 2 )]
+
+polygon = Vector2Array( -72, 224, 72, 120, 168, 88, 280, 152, 440, 192, 456, 312, 416, 400, 248, 392, 56, 400, -112, 312 )
+smooth_level = 1.0
+smooth_max_angle = 120
+
+[node name="Layer3" type="Node2D" parent="Background"]
+
 [node name="Sprites" type="Node2D" parent="."]
 
 transform/scale = Vector2( 4, 4 )
@@ -37,17 +55,17 @@ __meta__ = { "_edit_lock_":true }
 [node name="Sign" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 138, 41 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="Sign 2" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 90, 134 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="Treasure" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 144, 86 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="RockFormation" type="Node2D" parent="Sprites"]
 
@@ -56,84 +74,81 @@ transform/pos = Vector2( 96, 28.5 )
 
 [node name="Rock" type="Sprite" parent="Sprites/RockFormation"]
 
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="Rock 2" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( 6, 4 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 flip_h = true
 
 [node name="Rock 3" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( -2, 4 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="Rock 4" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( 6, 10 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 flip_h = true
 
 [node name="Rock 5" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( -8, 4 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 flip_h = true
 
 [node name="Rock 6" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( -10, 10 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="Rock 7" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( 14, 8 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 flip_h = true
 
 [node name="Rock 8" type="Sprite" parent="Sprites/RockFormation"]
 
 transform/pos = Vector2( 0, 8 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="Flower" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 148, 40.75 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 
 [node name="Flower 2" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 36, 128 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 
 [node name="Flower 3" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 98, 134 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="Fence" type="Sprite" parent="Sprites"]
 
 transform/pos = Vector2( 96, 40.5 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 region = true
 region_rect = Rect2( 0, 0, 64, 16 )
 
-[node name="BorderedPolygon2D5" parent="." instance=ExtResource( 9 )]
+[node name="BorderedPolygon2D5" parent="." instance=ExtResource( 2 )]
 
-polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 824, 296, 704, 280, 616, 256, 360, 256, 264, 280, 200, 328, 144, 320 )
-border_overlap = -16
+polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 816, 296, 704, 280, 616, 256, 392, 264, 280, 288, 200, 328, 144, 320 )
 
-[node name="BorderedPolygon2D3" parent="." instance=ExtResource( 9 )]
+[node name="BorderedPolygon2D3" parent="." instance=ExtResource( 2 )]
 
 polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 648, 408, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
-border_overlap = -16
 smooth_level = 1.0
 smooth_max_angle = 120
 
-[node name="BorderedPolygon2D4" parent="." instance=ExtResource( 9 )]
+[node name="BorderedPolygon2D4" parent="." instance=ExtResource( 2 )]
 
 polygon = Vector2Array( -64, 640, -32, 528, 160, 576, 320, 600, 584, 584, 784, 576, 960, 544, 1064, 576, 1064, 624 )
-border_overlap = -16
 
 

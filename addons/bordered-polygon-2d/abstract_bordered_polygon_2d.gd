@@ -36,6 +36,14 @@ export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotat
 export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
 export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
 
+onready var _is_ready = true
+func is_ready():
+	return _is_ready
+
+func set_opacity(value):
+	.set_opacity(value)
+	if is_ready():
+		update_opacity()
 
 func set_border_size(value):
 	border_size = value
