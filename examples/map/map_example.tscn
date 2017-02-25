@@ -8,7 +8,7 @@
 [ext_resource path="res://examples/map/tiles/tile099.png" type="Texture" id=6]
 [ext_resource path="res://examples/map/tiles/tile116.png" type="Texture" id=7]
 [ext_resource path="res://examples/map/tiles/tile049.png" type="Texture" id=8]
-[ext_resource path="res://examples/map/Platform.tscn" type="PackedScene" id=9]
+[ext_resource path="res://examples/map/platform.tscn" type="PackedScene" id=9]
 
 [node name="MapExample" type="Node2D"]
 
@@ -122,15 +122,18 @@ region_rect = Rect2( 0, 0, 64, 16 )
 [node name="BorderedPolygon2D5" parent="." instance=ExtResource( 9 )]
 
 polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 824, 296, 704, 280, 616, 256, 360, 256, 264, 280, 200, 328, 144, 320 )
+border_overlap = -16
 
 [node name="BorderedPolygon2D3" parent="." instance=ExtResource( 9 )]
 
 polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 648, 408, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
+border_overlap = -16
 smooth_level = 1.0
 smooth_max_angle = 120
 
 [node name="BorderedPolygon2D4" parent="." instance=ExtResource( 9 )]
 
 polygon = Vector2Array( -64, 640, -32, 528, 160, 576, 320, 600, 584, 584, 784, 576, 960, 544, 1064, 576, 1064, 624 )
+border_overlap = -16
 
 
