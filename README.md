@@ -59,4 +59,4 @@ automatically rotated when inserted into borders.
 
 ## Future Work
 
-Want to know what is ahead? Visit the [enhancements list](../../milestone/2)!
+Want to know what is ahead? Visit the [features list for the next version](../../milestone/2)!

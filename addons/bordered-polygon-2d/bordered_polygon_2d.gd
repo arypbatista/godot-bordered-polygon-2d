@@ -18,8 +18,6 @@ var inner_polygon = null
 
 var clockwise = null
 
-onready var _is_ready = true
-
 var borders = []
 
 var editor_polygon_color = Color("ffffff")
@@ -28,10 +26,10 @@ func tileset_size(tileset):
 	return tileset.get_tiles_ids().size()
 
 func update():
-	if _is_ready:
+	if is_ready():
 		# We only use polygon for edition purposes
-		set_self_opacity(0)
 		update_borders()
+		update_opacity()
 
 func invalidate():
 	clockwise = null
@@ -65,11 +63,13 @@ func is_clockwise():
 
 func create_inner_polygon():
 	var p = Polygon2D.new()
+	p.set_name('Fill')
 	p.set_texture(get_texture())
 	p.set_texture_scale(get_texture_scale())
 	p.set_texture_rotation(get_texture_rotation())
 	p.set_texture_offset(get_texture_offset())
 	p.set_uv(get_uv())
+	p.set_opacity(get_opacity())
 	p.set_color(editor_polygon_color)
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_material(get_material())
@@ -266,9 +266,14 @@ func invert_scale(scale):
 
 func create_border(width, height, quad, offset=Vector2(0,0)):
 	var border = Polygon2D.new()
+	border.set_name('Border')
 	var border_angle = quad_angle(quad)
 	border.set_uv([Vector2(width, 0) + offset, Vector2(0, 0) + offset, Vector2(0, height) + offset, Vector2(width, height) + offset])
 	border.set_polygon(quad)
+	
+	var alpha = border.get_color().a
+	border.set_color(editor_polygon_color)
+	border.get_color().a = alpha
 
 	var tex_idx = 0
 	if border_textures != null:
@@ -343,7 +348,7 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
 	
-	set_inner_polygon(expand_or_contract_shape_points(shape_points, border_size + border_overlap))
+	set_inner_polygon(expand_or_contract_shape_points(shape_points, border_overlap))
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 
 	# Turn points to quads
@@ -355,8 +360,8 @@ func make_border(border_size):
 	for i in range(border_points_count/2 - 1):
 		var quad = calculate_quad(i, border_points, border_points_count)
 		var width = quad[QUAD_BOTTOM_1].distance_to(quad[QUAD_BOTTOM_2])
-		var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
-		lastborder_texture_offset = width + lastborder_texture_offset
+		var border = create_border(-width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
+		lastborder_texture_offset = -width + lastborder_texture_offset
 		add_border(border)
 
 func update_borders():
@@ -368,10 +373,33 @@ func update_borders():
 	remove_borders()
 	if is_shape(get_polygon()) and has_border_textures():
 		make_border(border_size)
-	
+
 	# hide control polygon when running
-	if get_tree().is_editor_hint() == false:
-		set_color("00ffffff")
+	if not get_tree().is_editor_hint():
+		set_color(Color("00ffffff"))
+
+func update_opacity():
+	var opacity = calculate_opacity()
+	if inner_polygon != null:
+		update_polygon_opacity(inner_polygon, opacity)
+	for border in borders:
+		update_polygon_opacity(border, opacity)
+
+func calculate_opacity():
+	var current = self
+	var opacity = 1
+	while current != null:
+		opacity *= current.get_opacity()
+		current = current.get_parent()
+		# Leave calculus if parent doesn't have opacity methods
+		if current != null and not current.has_method('get_opacity'):
+			current = null
+	return opacity
+
+func update_polygon_opacity(polygon, opacity):
+	var color = polygon.get_color()
+	color.a = opacity
+	polygon.set_color(color)
 
 func _ready():
 	update()
