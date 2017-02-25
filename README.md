@@ -30,8 +30,8 @@ There are some options available to customize BorderedPolygon2D:
 
 - **Border Size**: The border size in pixels.
 - **Border Overlap**: The border overlap in pixels. Specify how many pixels of
-    the border should overlap with the inner texture. Negative numbers will
-    overlap. Possitive will move the borders away from the fill texture.
+    the border should overlap with the inner texture. Possitive numbers will
+    overlap. Negative will move the borders away from the fill texture.
 - **Border Texture**: A single texture\* for all borders.
 - **Border Textures**: Tileset with border textures\*. This is basically a
     collection of sprites. BorderPolygon2D will take the texture inside each
