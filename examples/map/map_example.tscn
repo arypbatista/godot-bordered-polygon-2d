@@ -15,6 +15,8 @@
 
 [node name="MapExample" type="Node2D"]
 
+__meta__ = { "_edit_lock_":true }
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
 polygon = Vector2Array( -320, -192, 1344, -192, 1344, 832, -320, 832 )
@@ -28,107 +30,103 @@ texture/scale = Vector2( 1, 1 )
 texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
+__meta__ = { "_edit_lock_":true }
 
-[node name="Sign" type="Sprite" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
 
-transform/pos = Vector2( 544, 120 )
 transform/scale = Vector2( 4, 4 )
+__meta__ = { "_edit_lock_":true }
+
+[node name="Sign" type="Sprite" parent="Sprites"]
+
+transform/pos = Vector2( 138, 41 )
 texture = ExtResource( 2 )
 
-[node name="Sign 2" type="Sprite" parent="."]
+[node name="Sign 2" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 392, 496 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 90, 134 )
 texture = ExtResource( 2 )
 
-[node name="Treasure" type="Sprite" parent="."]
+[node name="Treasure" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 592, 328 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 144, 86 )
 texture = ExtResource( 3 )
 
-[node name="Rock" type="Sprite" parent="."]
+[node name="RockFormation" type="Node2D" parent="Sprites"]
 
-transform/pos = Vector2( 376, 72 )
-transform/scale = Vector2( 4, 4 )
+editor/display_folded = true
+transform/pos = Vector2( 96, 28.5 )
+
+[node name="Rock" type="Sprite" parent="Sprites/RockFormation"]
+
 texture = ExtResource( 4 )
 
-[node name="Rock 2" type="Sprite" parent="."]
+[node name="Rock 2" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 400, 88 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 6, 4 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Rock 3" type="Sprite" parent="."]
+[node name="Rock 3" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 368, 88 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( -2, 4 )
 texture = ExtResource( 4 )
 
-[node name="Rock 4" type="Sprite" parent="."]
+[node name="Rock 4" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 400, 112 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 6, 10 )
 texture = ExtResource( 4 )
 flip_h = true
 
-[node name="Rock 5" type="Sprite" parent="."]
+[node name="Rock 5" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 344, 88 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( -8, 4 )
 texture = ExtResource( 4 )
 flip_h = true
 
-[node name="Rock 6" type="Sprite" parent="."]
+[node name="Rock 6" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 336, 112 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( -10, 10 )
 texture = ExtResource( 5 )
 
-[node name="Rock 7" type="Sprite" parent="."]
+[node name="Rock 7" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 432, 104 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 14, 8 )
 texture = ExtResource( 5 )
 flip_h = true
 
-[node name="Rock 8" type="Sprite" parent="."]
+[node name="Rock 8" type="Sprite" parent="Sprites/RockFormation"]
 
-transform/pos = Vector2( 376, 104 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 0, 8 )
 texture = ExtResource( 4 )
 
-[node name="Flower" type="Sprite" parent="."]
+[node name="Flower" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 584, 120 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 148, 40.75 )
 texture = ExtResource( 6 )
 
-[node name="Flower 2" type="Sprite" parent="."]
+[node name="Flower 2" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 152, 464 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 36, 128 )
 texture = ExtResource( 6 )
 
-[node name="Flower 3" type="Sprite" parent="."]
+[node name="Flower 3" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 408, 496 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 98, 134 )
 texture = ExtResource( 7 )
 
-[node name="Fence" type="Sprite" parent="."]
+[node name="Fence" type="Sprite" parent="Sprites"]
 
-transform/pos = Vector2( 376, 120 )
-transform/scale = Vector2( 4, 4 )
+transform/pos = Vector2( 96, 40.5 )
 texture = ExtResource( 8 )
 region = true
 region_rect = Rect2( 0, 0, 64, 16 )
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
-transform/pos = Vector2( -8, -12 )
-polygon = Vector2Array( 256, 192, 704, 192, 764, 204, 832, 180, 824, 212, 800, 236, 756, 252, 716, 260, 548, 228, 388, 236, 324, 284, 276, 348, 164, 340, 156, 268, 188, 220 )
+visibility/self_opacity = 0.0
+transform/pos = Vector2( -8, 24 )
+polygon = Vector2Array( 136, 248, 160, 344, 264, 368, 320, 288, 440, 272, 592, 232, 716, 260, 896, 240, 936, 200, 904, 136, 784, 168, 576, 200, 224, 200 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -142,18 +140,21 @@ invert/border = 100.0
 script/script = ExtResource( 10 )
 __meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
-border_overlap = 32
+border_overlap = 16
 border_textures = ExtResource( 12 )
 border_clockwise_shift = 0
 border_texture = null
+border_material = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.4
+smooth_max_angle = 90
 
 [node name="BorderedPolygon2D3" type="Polygon2D" parent="."]
 
-transform/pos = Vector2( -12, -12 )
-polygon = Vector2Array( 564, 452, 612, 460, 708, 452, 780, 452, 836, 412, 812, 372, 732, 396, 660, 404, 580, 396, 556, 412 )
+visibility/self_opacity = 0.0
+polygon = Vector2Array( 816, 424, 796, 380, 716, 404, 552, 400, 512, 416, 520, 448, 552, 464, 720, 440, 776, 448 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = ColorArray(  )
@@ -165,39 +166,45 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
 border_size = 64
-border_overlap = 32
-border_textures = ExtResource( 12 )
-border_clockwise_shift = 2
-border_texture = null
-border_texture_scale = Vector2( 4, 4 )
-border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 180.0
-
-[node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
-
-transform/pos = Vector2( -16, -8 )
-polygon = Vector2Array( 92, 660, 44, 588, 68, 540, 204, 532, 428, 564, 684, 564, 836, 548, 956, 540, 1068, 508, 1092, 588, 1084, 668 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 9 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 10 )
-__meta__ = { "_editor_icon":ExtResource( 11 ) }
-border_size = 64
-border_overlap = 32
+border_overlap = 16
 border_textures = ExtResource( 12 )
 border_clockwise_shift = 0
 border_texture = null
+border_material = null
 border_texture_scale = Vector2( 4, 4 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.4
+smooth_max_angle = 90
+
+[node name="BorderedPolygon2D2" type="Polygon2D" parent="."]
+
+visibility/self_opacity = 0.0
+polygon = Vector2Array( -48, 632, -16, 592, 104, 570, 176, 576, 360, 600, 472, 600, 744, 584, 880, 568, 956, 540, 1037, 543, 1056, 616 )
+uv = Vector2Array(  )
+color = Color( 1, 1, 1, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = ExtResource( 9 )
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+script/script = ExtResource( 10 )
+__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 11 ) }
+border_size = 64
+border_overlap = 16
+border_textures = ExtResource( 12 )
+border_clockwise_shift = 0
+border_texture = null
+border_material = null
+border_texture_scale = Vector2( 4, 4 )
+border_texture_offset = Vector2( 0, 0 )
+border_texture_rotation = 0.0
+smooth_level = 0.4
+smooth_max_angle = 90
 
 
