@@ -270,6 +270,10 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	var border_angle = quad_angle(quad)
 	border.set_uv([Vector2(width, 0) + offset, Vector2(0, 0) + offset, Vector2(0, height) + offset, Vector2(width, height) + offset])
 	border.set_polygon(quad)
+	
+	var alpha = border.get_color().a
+	border.set_color(editor_polygon_color)
+	border.get_color().a = alpha
 
 	var tex_idx = 0
 	if border_textures != null:
@@ -375,15 +379,26 @@ func update_borders():
 		set_color(Color("00ffffff"))
 
 func update_opacity():
-	var opacity = get_opacity()
+	var opacity = calculate_opacity()
 	if inner_polygon != null:
-		update_polygon_opacity(inner_polygon)
+		update_polygon_opacity(inner_polygon, opacity)
 	for border in borders:
-		update_polygon_opacity(border)
+		update_polygon_opacity(border, opacity)
 
-func update_polygon_opacity(polygon):
+func calculate_opacity():
+	var current = self
+	var opacity = 1
+	while current != null:
+		opacity *= current.get_opacity()
+		current = current.get_parent()
+		# Leave calculus if parent doesn't have opacity methods
+		if current != null and not current.has_method('get_opacity'):
+			current = null
+	return opacity
+
+func update_polygon_opacity(polygon, opacity):
 	var color = polygon.get_color()
-	color.a = get_opacity()
+	color.a = opacity
 	polygon.set_color(color)
 
 func _ready():
