@@ -267,9 +267,8 @@ func invert_scale(scale):
 func create_border(width, height, quad, offset=Vector2(0,0)):
 	var border = Polygon2D.new()
 	var border_angle = quad_angle(quad)
-	border.set_uv( [ Vector2(width, 0), Vector2(0, 0), Vector2(0, height), Vector2(width, height)])
+	border.set_uv([Vector2(width, 0) + offset, Vector2(0, 0) + offset, Vector2(0, height) + offset, Vector2(width, height) + offset])
 	border.set_polygon(quad)
-	border.set_texture_offset(offset)
 
 	var tex_idx = 0
 	if border_textures != null:
@@ -335,11 +334,6 @@ func get_border_texture(idx=0):
 func get_texture_sample():
 	return get_border_texture(0)
 
-func max_quad_width(quad):
-	var top_width = quad[QUAD_TOP_1].distance_to(quad[QUAD_TOP_2])
-	var bottom_width = quad[QUAD_BOTTOM_1].distance_to(quad[QUAD_BOTTOM_2])
-	return max(top_width, bottom_width)
-
 func make_border(border_size):
 	var shape_points = get_polygon()
 	
@@ -360,7 +354,7 @@ func make_border(border_size):
 
 	for i in range(border_points_count/2 - 1):
 		var quad = calculate_quad(i, border_points, border_points_count)
-		var width = max_quad_width(quad)
+		var width = quad[QUAD_BOTTOM_1].distance_to(quad[QUAD_BOTTOM_2])
 		var border = create_border(width, border_size, quad, Vector2(lastborder_texture_offset + border_texture_offset.x, border_texture_offset.y))
 		lastborder_texture_offset = width + lastborder_texture_offset
 		add_border(border)
