@@ -40,4 +40,4 @@ automatically rotated when inserted into borders.
 
 ## Future Work
 
-Want to know what is ahead? Visit the [enhancements list](../../labels/enhancement)!
+Want to know what is ahead? Visit the [enhancements list](../../milestone/2)!
