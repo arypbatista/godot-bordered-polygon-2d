@@ -10,9 +10,9 @@
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
 visibility/self_opacity = 0.0
-polygon = Vector2Array( 152, 304, 88, 192, 168, 136, 384, 184, 584, 128, 720, 216, 984, 280, 976, 440, 680, 472, 328, 448, 280, 328 )
+polygon = Vector2Array( 152, 304, 88, 192, 168, 136, 384, 184, 584.693, 148.301, 638.957, 235.727, 755.023, 265.874, 874.104, 238.742, 976, 440, 680, 472, 328, 448, 280, 328 )
 uv = Vector2Array(  )
-color = Color( 0.515625, 0.515625, 0.515625, 1 )
+color = Color( 1, 1, 1, 0 )
 vertex_colors = ColorArray(  )
 offset = Vector2( 0, 0 )
 texture/texture = ExtResource( 1 )
@@ -24,7 +24,7 @@ invert/border = 100.0
 script/script = ExtResource( 2 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
 border_size = 32
-border_overlap = -16
+border_overlap = 16
 border_textures = null
 border_clockwise_shift = 0
 border_texture = ExtResource( 4 )

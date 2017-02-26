@@ -14,19 +14,85 @@ const SMOOTH_MIN_ANGLE = PI*0.08
 const SMOOTH_MIN_ANGLE_GAIN = PI*0.08
 const SMOOTH_MAX_NODES_PER_FACE = 10
 
-var inner_polygon = null
+const FILL_NODE_NAME = '_Fill'
+const BORDERS_NODE_NAME = '_Borders'
 
-var clockwise = null
+var _is_ready = false
+var _is_reloading = false
+var inner_polygon
+var clockwise
+var borders
+var fill
 
-var borders = []
+func is_editor_mode():
+	if get_tree() != null:
+		return get_tree().is_editor_hint()
+	elif get_tree() == null and get_children().size() > 0:
+		# If we have children but don't know the tree
+		# then we can infer that editor is reloading this
+		# script, and we are in editor mode
+		return true
+	else:
+		false
+
+func _init():
+	# If we have children when init, then
+	# script is reloading in editor mode
+	if get_children().size() > 0:
+		_is_reloading = true
+
+func _enter_tree():
+	if _is_reloading:
+		initialize()
+
+func _ready():
+	if not _is_ready:
+		initialize()
+
+func initialize():
+	_is_ready = true
+	prepare()
+	update()
+	if is_editor_mode():
+		# Hack updates on editor mode
+		set_process(true)
+
+func remove_child_if_present(path):
+	if has_node(path):
+		var n = get_node(path)
+		remove_child(n)
+		n.free()
+
+func get_or_create_node(name):
+	if has_node(name):
+		return get_node(name)
+	else:
+		var node = Node2D.new()
+		node.set_name(name)
+		add_child(node)
+		return node
+
+func prepare():
+	fill = get_or_create_node(FILL_NODE_NAME)
+	borders = get_or_create_node(BORDERS_NODE_NAME)
+	move_child(fill, 0)
+	move_child(borders, 1)
+	
+	
+
+func _process(delta):
+	# Editor mode only
+	update(true)
 
 func tileset_size(tileset):
 	return tileset.get_tiles_ids().size()
 
-func update():
-	if is_ready():
-		update_borders()
-		update_opacity()
+func update(shallow=false):
+	if _is_ready:
+		if not shallow:
+			update_borders()
+		update_color_and_opacity()
+	.update()
 
 func invalidate():
 	clockwise = null
@@ -67,7 +133,6 @@ func create_inner_polygon():
 	p.set_texture_offset(get_texture_offset())
 	p.set_uv(get_uv())
 	p.set_opacity(get_opacity())
-	p.set_color(editor_polygon_color)
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_material(get_material())
 	set_inner_polygon_node(p)
@@ -75,8 +140,9 @@ func create_inner_polygon():
 func set_inner_polygon_node(polygon):
 	if inner_polygon != null:
 		inner_polygon.free()
+		inner_polygon = null
 	inner_polygon = polygon
-	add_child(inner_polygon)
+	fill.add_child(inner_polygon)
 
 func set_inner_polygon(polygon):
 	if typeof(polygon) == TYPE_VECTOR2_ARRAY:
@@ -206,14 +272,12 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 		return Vector2Array(output_points)
 
 func add_border(border):
-	add_child(border)
-	borders.append(border)
+	borders.add_child(border)
 
 func remove_borders():
-	for border in borders:
-		remove_child(border)
+	for border in borders.get_children():
+		borders.remove_child(border)
 		border.free()
-	borders = []
 
 func possitive_angle(angle):
 	if angle < 0:
@@ -267,10 +331,6 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	var border_angle = quad_angle(quad)
 	border.set_uv([Vector2(width, 0) + offset, Vector2(0, 0) + offset, Vector2(0, height) + offset, Vector2(width, height) + offset])
 	border.set_polygon(quad)
-	
-	var alpha = border.get_color().a
-	border.set_color(editor_polygon_color)
-	border.get_color().a = alpha
 
 	var tex_idx = 0
 	if border_textures != null:
@@ -366,16 +426,17 @@ func update_borders():
 	if is_shape(get_polygon()) and has_border_textures():
 		make_border(border_size)
 
-func update_opacity():
+func update_color_and_opacity():
 	var opacity = calculate_opacity()
+	update_polygon_color(self, get_color(), 0)
 	if inner_polygon != null:
-		update_polygon_opacity(inner_polygon, opacity)
-	for border in borders:
-		update_polygon_opacity(border, opacity)
+		update_polygon_color(inner_polygon, get_color(), opacity)
+	for border in borders.get_children():
+		update_polygon_color(border, get_color(), opacity)
 	hide_editor_polygon()
 
 func hide_editor_polygon():
-	set_color('#00ffffff', false)
+	set_self_opacity(0)
 
 func calculate_opacity():
 	var current = self
@@ -388,10 +449,7 @@ func calculate_opacity():
 			current = null
 	return opacity
 
-func update_polygon_opacity(polygon, opacity):
-	var color = polygon.get_color()
-	color.a = opacity
+func update_polygon_color(polygon, color, opacity=null):
+	if opacity != null:
+		color.a = opacity
 	polygon.set_color(color)
-
-func _ready():
-	update()
