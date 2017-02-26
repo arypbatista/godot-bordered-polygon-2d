@@ -37,12 +37,10 @@ __meta__ = { "_edit_lock_":true }
 
 visibility/opacity = 0.1
 polygon = Vector2Array( 336, 408, 704, 8, 1112, 232, 1192, 656, 184, 672 )
-border_size = 16
+border_size = 8
 border_overlap = 0
-border_texture_scale = Vector2( 2, 2 )
-border_texture_offset = Vector2( 0, 16 )
-smooth_level = 1.0
-smooth_max_angle = 120
+border_texture_scale = Vector2( 1, 1 )
+border_texture_offset = Vector2( 0, 8 )
 
 [node name="Layer2" type="Node2D" parent="Background"]
 
@@ -50,13 +48,11 @@ visibility/opacity = 0.4
 
 [node name="BorderedPolygon2D6" parent="Background/Layer2" instance=ExtResource( 2 )]
 
-polygon = Vector2Array( -24, 136, 64, 104, 120, 184, 184, 440, 216, 504, 280, 512, 392, 568, 280, 632, -144, 640, -144, 312, -128, 216 )
+polygon = Vector2Array( -24, 136, 64, 104, 120, 184, 184, 440, 216, 504, 280, 512, 400, 632, 280, 632, -120, 640, -144, 312, -128, 216 )
 border_size = 16
 border_overlap = 0
 border_texture_scale = Vector2( 2, 2 )
 border_texture_offset = Vector2( 0, 16 )
-smooth_level = 1.0
-smooth_max_angle = 120
 
 [node name="BorderedPolygon2D7" parent="Background/Layer2" instance=ExtResource( 2 )]
 
@@ -174,13 +170,12 @@ region_rect = Rect2( 0, 0, 64, 16 )
 
 [node name="BorderedPolygon2D5" parent="." instance=ExtResource( 2 )]
 
-polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 816, 296, 704, 280, 616, 256, 392, 264, 288, 280, 200, 328, 144, 320 )
+polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 208, 768, 200, 856, 216, 880, 256, 816, 296, 704, 280, 600, 272, 392, 272, 272, 288, 200, 328, 144, 320 )
+smooth_level = 0.0
 
 [node name="BorderedPolygon2D3" parent="." instance=ExtResource( 2 )]
 
-polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 648, 408, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
-smooth_level = 1.0
-smooth_max_angle = 120
+polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 656, 400, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
 
 [node name="BorderedPolygon2D4" parent="." instance=ExtResource( 2 )]
 

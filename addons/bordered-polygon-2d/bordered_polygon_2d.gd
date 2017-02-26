@@ -18,7 +18,22 @@ var inner_polygon = null
 
 var clockwise = null
 
-var borders = []
+var borders
+var fill
+
+func _ready():
+	if get_color() != null:
+		editor_polygon_color = get_color()
+	update()
+
+func _enter_tree():
+	fill = Node2D.new()
+	fill.set_name('Fill')
+	borders = Node2D.new()
+	borders.set_name('Borders')
+	add_child(fill)
+	add_child(borders)
+	
 
 func tileset_size(tileset):
 	return tileset.get_tiles_ids().size()
@@ -75,8 +90,9 @@ func create_inner_polygon():
 func set_inner_polygon_node(polygon):
 	if inner_polygon != null:
 		inner_polygon.free()
+		inner_polygon = null
 	inner_polygon = polygon
-	add_child(inner_polygon)
+	fill.add_child(inner_polygon)
 
 func set_inner_polygon(polygon):
 	if typeof(polygon) == TYPE_VECTOR2_ARRAY:
@@ -177,7 +193,7 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 
 			point_normals.append((a_90 + c_90).normalized()) 
 
-		if advance == true:
+		if advance:
 			for test_point in range(points_count):
 				var closet_point
 				var closest_distance = abs(amount)
@@ -206,14 +222,12 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 		return Vector2Array(output_points)
 
 func add_border(border):
-	add_child(border)
-	borders.append(border)
+	borders.add_child(border)
 
 func remove_borders():
-	for border in borders:
-		remove_child(border)
+	for border in borders.get_children():
+		borders.remove_child(border)
 		border.free()
-	borders = []
 
 func possitive_angle(angle):
 	if angle < 0:
@@ -309,8 +323,14 @@ func is_shape(shape_points):
 	return shape_points.size() >= 3
 
 func calculate_border_points(shape_points, border_size, border_overlap=0):
-	var border_inner_points = shape_points
-	var border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size)
+	var border_inner_points
+	var border_outer_points
+	if border_overlap >= 0:
+		border_inner_points = shape_points
+		border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size)
+	else:
+		border_inner_points = expand_or_contract_shape_points(shape_points, border_overlap)
+		border_outer_points = expand_or_contract_shape_points(border_inner_points, border_size)
 
 	# close outer shape
 	border_inner_points.append(border_inner_points[0] + Vector2(0.0001, 0))
@@ -344,7 +364,11 @@ func make_border(border_size):
 	if smooth_level > 0:
 		shape_points = smooth_shape_points(shape_points, get_smooth_max_angle())
 	
-	set_inner_polygon(expand_or_contract_shape_points(shape_points, border_overlap))
+	if border_overlap >= 0:
+		set_inner_polygon(expand_or_contract_shape_points(shape_points, border_overlap))
+	else:
+		set_inner_polygon(shape_points)
+	
 	var border_points = calculate_border_points(shape_points, border_size, border_overlap)
 
 	# Turn points to quads
@@ -370,7 +394,7 @@ func update_opacity():
 	var opacity = calculate_opacity()
 	if inner_polygon != null:
 		update_polygon_opacity(inner_polygon, opacity)
-	for border in borders:
+	for border in borders.get_children():
 		update_polygon_opacity(border, opacity)
 	hide_editor_polygon()
 
@@ -393,5 +417,3 @@ func update_polygon_opacity(polygon, opacity):
 	color.a = opacity
 	polygon.set_color(color)
 
-func _ready():
-	update()
