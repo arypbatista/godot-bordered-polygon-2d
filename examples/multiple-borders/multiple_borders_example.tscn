@@ -9,6 +9,7 @@
 
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
+visibility/self_opacity = 0.0
 polygon = Vector2Array( 128, 192, 288, 192, 288, 352, 128, 352 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
@@ -27,12 +28,16 @@ border_overlap = 0
 border_textures = ExtResource( 3 )
 border_clockwise_shift = 0
 border_texture = null
+border_material = null
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0.0
+smooth_max_angle = 90
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
+visibility/self_opacity = 0.0
 polygon = Vector2Array( 480, 192, 576, 96, 736, 96, 832, 192, 832, 352, 736, 448, 576, 448, 480, 352 )
 uv = Vector2Array(  )
 color = Color( 1, 1, 1, 1 )
@@ -51,8 +56,11 @@ border_overlap = 0
 border_textures = ExtResource( 4 )
 border_clockwise_shift = 0
 border_texture = null
+border_material = null
 border_texture_scale = Vector2( 1, 1 )
 border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
+smooth_level = 0
+smooth_max_angle = 90
 
 

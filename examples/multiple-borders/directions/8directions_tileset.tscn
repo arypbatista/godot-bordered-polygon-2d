@@ -34,13 +34,11 @@ texture = ExtResource( 4 )
 [node name="Sprite2" type="Sprite" parent="."]
 
 transform/pos = Vector2( 96, 160 )
-transform/scale = Vector2( 1, 1 )
 texture = ExtResource( 5 )
 
 [node name="Sprite6" type="Sprite" parent="."]
 
 transform/pos = Vector2( 32, 160 )
-transform/scale = Vector2( 1, 1 )
 texture = ExtResource( 6 )
 
 [node name="Sprite3" type="Sprite" parent="."]
