@@ -35,7 +35,26 @@ export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_text
 export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
 export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
 export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
+export (String, 'Mix', 'Add', 'Sub', 'Mul', 'PMAlpha') var fill_blend_mode = BLEND_MODE_MIX setget set_fill_blend_mode, get_fill_blend_mode
+export (String, 'Mix', 'Add', 'Sub', 'Mul', 'PMAlpha', 'Same as Fill') var border_blend_mode = 'Same as Fill' setget set_border_blend_mode, get_border_blend_mode
 
+const BLEND_MODE_SAME_AS_FILL = 'Same as Fill'
+
+var border_blend_mode_sync_fill = false
+
+func set_border_blend_mode(blend_mode):
+	border_blend_mode = blend_mode
+	update(true)
+
+func get_border_blend_mode():
+	return border_blend_mode
+
+func set_fill_blend_mode(blend_mode):
+	fill_blend_mode = blend_mode
+	update(true)
+
+func get_fill_blend_mode():
+	return fill_blend_mode
 
 func set_border_size(value):
 	border_size = value
