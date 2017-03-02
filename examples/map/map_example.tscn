@@ -38,12 +38,9 @@ __meta__ = { "_edit_lock_":true }
 visibility/opacity = 0.1
 polygon = Vector2Array( 336, 408, 704, 8, 1112, 232, 1192, 656, 184, 672 )
 color = Color( 1, 1, 1, 0 )
-border_size = 16
 border_overlap = 0
-border_texture_scale = Vector2( 2, 2 )
-border_texture_offset = Vector2( 0, 16 )
-smooth_level = 1.0
-smooth_max_angle = 120
+fill_blend_mode = "Mix"
+border_blend_mode = "Same as Fill"
 
 [node name="Layer2" type="Node2D" parent="Background"]
 
@@ -53,23 +50,17 @@ visibility/opacity = 0.4
 
 polygon = Vector2Array( -24, 136, 64, 104, 120, 184, 184, 440, 216, 504, 280, 512, 392, 568, 280, 632, -144, 640, -144, 312, -128, 216 )
 color = Color( 1, 1, 1, 0 )
-border_size = 16
 border_overlap = 0
-border_texture_scale = Vector2( 2, 2 )
-border_texture_offset = Vector2( 0, 16 )
-smooth_level = 1.0
-smooth_max_angle = 120
+fill_blend_mode = "Mix"
+border_blend_mode = "Same as Fill"
 
 [node name="BorderedPolygon2D7" parent="Background/Layer2" instance=ExtResource( 2 )]
 
 polygon = Vector2Array( 352, 632, 424, 560, 752, 504, 912, 376, 1008, 328, 1144, 440, 1248, 640 )
 color = Color( 1, 1, 1, 0 )
-border_size = 16
 border_overlap = 0
-border_texture_scale = Vector2( 2, 2 )
-border_texture_offset = Vector2( 0, 16 )
-smooth_level = 1.0
-smooth_max_angle = 120
+fill_blend_mode = 0
+border_blend_mode = null
 
 [node name="Layer3" type="Node2D" parent="Background"]
 
@@ -79,12 +70,9 @@ visibility/opacity = 0.8
 
 polygon = Vector2Array( -48, 648, -48, 528, 240, 496, 336, 560, 488, 600, 590.334, 553.485, 704, 528, 1032, 560, 1120, 648 )
 color = Color( 1, 1, 1, 0 )
-border_size = 24
 border_overlap = 0
-border_texture_scale = Vector2( 3, 3 )
-border_texture_offset = Vector2( 0, 24 )
-smooth_level = 1.0
-smooth_max_angle = 120
+fill_blend_mode = 0
+border_blend_mode = null
 
 [node name="Sprites" type="Node2D" parent="."]
 
@@ -180,17 +168,21 @@ region_rect = Rect2( 0, 0, 64, 16 )
 
 polygon = Vector2Array( 136, 272, 168, 232, 240, 224, 616, 224, 768, 200, 856, 216, 880, 256, 816, 296, 704, 280, 616, 256, 392, 264, 288, 280, 200, 328, 144, 320 )
 color = Color( 1, 1, 1, 0 )
+fill_blend_mode = 0
+border_blend_mode = null
 
 [node name="BorderedPolygon2D3" parent="." instance=ExtResource( 2 )]
 
 polygon = Vector2Array( 496, 464, 440, 424, 496, 392, 648, 408, 776, 376, 824, 384, 816, 416, 760, 432, 608, 424 )
 color = Color( 1, 1, 1, 0 )
-smooth_level = 1.0
-smooth_max_angle = 120
+fill_blend_mode = 0
+border_blend_mode = null
 
 [node name="BorderedPolygon2D4" parent="." instance=ExtResource( 2 )]
 
 polygon = Vector2Array( -64, 640, -40, 584, 160, 576, 320, 600, 584, 584, 784, 576, 960, 544, 1064, 576, 1064, 624 )
 color = Color( 1, 1, 1, 0 )
+fill_blend_mode = 0
+border_blend_mode = null
 
 

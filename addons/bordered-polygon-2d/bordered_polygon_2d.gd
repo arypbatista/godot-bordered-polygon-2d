@@ -24,6 +24,7 @@ var clockwise
 var borders
 var fill
 
+
 func is_editor_mode():
 	if get_tree() != null:
 		return get_tree().is_editor_hint()
@@ -89,8 +90,7 @@ func tileset_size(tileset):
 
 func update(shallow=false):
 	if _is_ready:
-		if not shallow:
-			update_borders()
+		update_borders(shallow)
 		update_color_and_opacity()
 	.update()
 
@@ -132,9 +132,9 @@ func create_inner_polygon():
 	p.set_texture_rotation(get_texture_rotation())
 	p.set_texture_offset(get_texture_offset())
 	p.set_uv(get_uv())
-	p.set_opacity(get_opacity())
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_material(get_material())
+	shallow_update(p)
 	set_inner_polygon_node(p)
 
 func set_inner_polygon_node(polygon):
@@ -150,6 +150,30 @@ func set_inner_polygon(polygon):
 		inner_polygon.set_polygon(polygon)
 	else: # polygon is Polygon2D node
 		set_inner_polygon_node(polygon)
+
+
+var TEXT_TO_BLEND_MODE_DICT = {
+		'Mix' : BLEND_MODE_MIX,
+		'Add' : BLEND_MODE_ADD,
+		'Sub' : BLEND_MODE_SUB,
+		'Mul' : BLEND_MODE_MUL,
+		'PMAlpha' : BLEND_MODE_PREMULT_ALPHA,
+		'Same as Fill' : null
+	}
+
+func text_to_blend_mode(blend_mode):
+	if TEXT_TO_BLEND_MODE_DICT.has(blend_mode):
+		return TEXT_TO_BLEND_MODE_DICT[blend_mode]
+	else:
+		return null
+
+func shallow_update(polygon, is_border=true):
+	if is_border and text_to_blend_mode(border_blend_mode) != null:
+		polygon.set_blend_mode(text_to_blend_mode(border_blend_mode))
+	elif text_to_blend_mode(fill_blend_mode) != null:
+		polygon.set_blend_mode(text_to_blend_mode(fill_blend_mode))
+	polygon.set_opacity(get_opacity())
+	return polygon
 
 func get_smooth_max_nodes():
 	return get_polygon().size() * SMOOTH_MAX_NODES_PER_FACE * smooth_level
@@ -344,6 +368,8 @@ func create_border(width, height, quad, offset=Vector2(0,0)):
 	border.set_texture_rotation(texture_rotation)
 	border.set_texture_scale(invert_scale(border_texture_scale))
 	
+	shallow_update(border, true)
+	
 	return border
 
 func calculate_quad(index, points, border_points_count):
@@ -420,11 +446,17 @@ func make_border(border_size):
 		lastborder_texture_offset = -width + lastborder_texture_offset
 		add_border(border)
 
-func update_borders():
-	# Remove old borders
-	remove_borders()
-	if is_shape(get_polygon()) and has_border_textures():
-		make_border(border_size)
+func update_borders(shallow=false):
+	if not shallow:
+		# Remove old borders
+		remove_borders()
+		if is_shape(get_polygon()) and has_border_textures():
+			make_border(border_size)
+	else:
+		for border in borders.get_children():
+			shallow_update(border, true)
+		if inner_polygon != null:
+			shallow_update(inner_polygon)
 
 func update_color_and_opacity():
 	var opacity = calculate_opacity()
