@@ -345,18 +345,20 @@ func create_border(border_size, quad, offset=Vector2(0,0)):
 
 	border.set_polygon(quad)
 
-	var tex_idx = 0
-	if border_textures != null:
-		tex_idx = texture_idx_from_angle(border_textures, border_angle)
-	var tex = get_border_texture(tex_idx)
-	tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
-	border.set_texture(tex)
-	border.set_material(get_border_material(tex_idx))
-	
-	var texture_rotation = deg2rad(border_texture_rotation) + PI
-	border.set_texture_rotation(texture_rotation)
-	border.set_texture_scale(invert_scale(border_texture_scale))
-	
+	# Prepare textures only if they're set
+	if has_border_textures():
+		var tex_idx = 0
+		if border_textures != null:
+			tex_idx = texture_idx_from_angle(border_textures, border_angle)
+		var tex = get_border_texture(tex_idx)
+		tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
+		border.set_texture(tex)
+		border.set_material(get_border_material(tex_idx))
+
+		var texture_rotation = deg2rad(border_texture_rotation) + PI
+		border.set_texture_rotation(texture_rotation)
+		border.set_texture_scale(invert_scale(border_texture_scale))
+
 	return border
 
 func calculate_quad(index, points, border_points_count):
@@ -435,7 +437,7 @@ func make_border(border_size):
 func update_borders():
 	# Remove old borders
 	remove_borders()
-	if is_shape(get_polygon()) and has_border_textures():
+	if is_shape(get_polygon()):
 		make_border(border_size)
 
 func update_color_and_opacity():
@@ -444,7 +446,7 @@ func update_color_and_opacity():
 	if inner_polygon != null:
 		update_polygon_color(inner_polygon, get_color(), opacity)
 	for border in borders.get_children():
-		update_polygon_color(border, get_color(), opacity)
+		update_polygon_color(border, border_color, opacity)
 	hide_editor_polygon()
 
 func hide_editor_polygon():

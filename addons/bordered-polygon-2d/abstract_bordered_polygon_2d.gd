@@ -8,6 +8,7 @@ extends Polygon2D
 
 export(int) var border_size = 50 setget set_border_size
 export(int) var border_overlap = 25 setget set_border_overlap
+export(Color) var border_color = Color(0, 0, 0)
 
 # You can set a tileset with border textures.
 # Tileset must have 2^n sprites. Sprites textures will be used
