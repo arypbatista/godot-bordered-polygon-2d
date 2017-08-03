@@ -425,12 +425,11 @@ func update_borders():
 
 func update_color_and_opacity():
 	var opacity = calculate_opacity()
-	update_polygon_color(self, get_color(), 0)
+	hide_editor_polygon()
 	if inner_polygon != null:
 		update_polygon_color(inner_polygon, get_color(), opacity)
 	for border in borders.get_children():
 		update_polygon_color(border, border_color, opacity)
-	hide_editor_polygon()
 
 func hide_editor_polygon():
 	set_self_opacity(0)
