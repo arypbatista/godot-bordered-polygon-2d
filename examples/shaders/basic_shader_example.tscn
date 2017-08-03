@@ -10,7 +10,9 @@
 
 [node name="ShaderExample" type="Node2D"]
 
-__meta__ = { "_edit_lock_":true }
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
@@ -27,7 +29,9 @@ texture/scale = Vector2( 1, 1 )
 texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
-__meta__ = { "_edit_lock_":true }
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
@@ -45,9 +49,13 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 4 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 5 ) }
+__meta__ = {
+"_edit_lock_": true,
+"_editor_icon": ExtResource( 5 )
+}
 border_size = 64
 border_overlap = 16
+border_color = Color( 0, 0, 0, 1 )
 border_textures = null
 border_clockwise_shift = 0
 border_texture = ExtResource( 6 )
@@ -75,9 +83,13 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 4 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 5 ) }
+__meta__ = {
+"_edit_lock_": true,
+"_editor_icon": ExtResource( 5 )
+}
 border_size = 64
 border_overlap = 16
+border_color = Color( 0, 0, 0, 1 )
 border_textures = null
 border_clockwise_shift = 0
 border_texture = ExtResource( 6 )

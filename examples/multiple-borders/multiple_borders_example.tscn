@@ -22,9 +22,12 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 1 )
-__meta__ = { "_editor_icon":ExtResource( 2 ) }
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
 border_size = 64
 border_overlap = 0
+border_color = Color( 0, 0, 0, 1 )
 border_textures = ExtResource( 3 )
 border_clockwise_shift = 0
 border_texture = null
@@ -50,9 +53,12 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 1 )
-__meta__ = { "_editor_icon":ExtResource( 2 ) }
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
 border_size = 64
 border_overlap = 0
+border_color = Color( 0, 0, 0, 1 )
 border_textures = ExtResource( 4 )
 border_clockwise_shift = 0
 border_texture = null

@@ -20,9 +20,13 @@ texture/rotation = 0.0
 invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 2 )
-__meta__ = { "_edit_lock_":true, "_editor_icon":ExtResource( 3 ) }
+__meta__ = {
+"_edit_lock_": true,
+"_editor_icon": ExtResource( 3 )
+}
 border_size = 32
 border_overlap = 16
+border_color = Color( 0, 0, 0, 1 )
 border_textures = ExtResource( 4 )
 border_clockwise_shift = 0
 border_texture = null
