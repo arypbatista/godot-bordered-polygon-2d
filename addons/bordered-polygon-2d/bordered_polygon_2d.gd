@@ -329,19 +329,19 @@ func create_border(border_size, quad, offset=Vector2(0,0)):
 	border.set_polygon(quad)
 
 	# Prepare textures only if they're set
+	var tex_idx = 0
 	if has_border_textures():
-		var tex_idx = 0
 		if border_textures != null:
 			tex_idx = texture_idx_from_angle(border_textures, border_angle)
 		var tex = get_border_texture(tex_idx)
 		tex.set_flags(tex.get_flags() | Texture.FLAG_REPEAT)
 		border.set_texture(tex)
-		border.set_material(get_border_material(tex_idx))
 
 		var texture_rotation = deg2rad(border_texture_rotation) + PI
 		border.set_texture_rotation(texture_rotation)
 		border.set_texture_scale(invert_scale(border_texture_scale))
 
+	border.set_material(get_border_material(tex_idx))
 	return border
 
 func calculate_quad(index, points, border_points_count):
