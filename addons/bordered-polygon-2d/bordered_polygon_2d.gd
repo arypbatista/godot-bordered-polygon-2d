@@ -33,7 +33,7 @@ func is_editor_mode():
 		# script, and we are in editor mode
 		return true
 	else:
-		false
+		return false
 
 func _init():
 	# If we have children when init, then
