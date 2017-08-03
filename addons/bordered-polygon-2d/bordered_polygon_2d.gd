@@ -42,18 +42,14 @@ func _init():
 
 func _enter_tree():
 	if _is_reloading:
-		initialize()
+		prepare()
 
 func _ready():
-	initialize()
+	prepare()
 
 func _draw():
 	update_borders()
 	update_color_and_opacity()
-
-func initialize():
-	prepare()
-	update()
 
 func remove_child_if_present(path):
 	if has_node(path):
