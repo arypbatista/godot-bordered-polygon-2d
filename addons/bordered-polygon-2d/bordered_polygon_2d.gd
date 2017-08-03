@@ -17,7 +17,6 @@ const SMOOTH_MAX_NODES_PER_FACE = 10
 const FILL_NODE_NAME = '_Fill'
 const BORDERS_NODE_NAME = '_Borders'
 
-var _is_ready = false
 var _is_reloading = false
 var inner_polygon
 var clockwise
@@ -46,27 +45,15 @@ func _enter_tree():
 		initialize()
 
 func _ready():
-	if not _is_ready:
-		initialize()
+	initialize()
 
-func _process(delta):
-	# Editor mode only
-	update()
-
-func update():
-	if _is_ready:
-		if not is_processing():
-			update_borders()
-		update_color_and_opacity()
-	.update()
+func _draw():
+	update_borders()
+	update_color_and_opacity()
 
 func initialize():
-	_is_ready = true
 	prepare()
 	update()
-
-	# Hack updates on editor mode
-	set_process(is_editor_mode())
 
 func remove_child_if_present(path):
 	if has_node(path):
@@ -425,7 +412,7 @@ func make_border(border_size):
 	# Turn points to quads
 	var lastborder_texture_offset = 0
 	var border_points_count = border_points.size()
-	var sample_width = get_texture_sample().get_size().x # FIXME: test code?
+	#var sample_width = get_texture_sample().get_size().x # FIXME: test code?
 
 	for i in range(border_points_count/2 - 1):
 		var quad = calculate_quad(i, border_points, border_points_count)
