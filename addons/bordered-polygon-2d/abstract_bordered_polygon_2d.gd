@@ -30,7 +30,7 @@ export (TileSet) var border_textures = null setget set_border_textures
 export (int) var border_clockwise_shift = 0 setget set_border_clockwise_shift
 
 export (Texture) var border_texture = null setget set_border_texture
-export (CanvasItemMaterial) var border_material = null setget set_border_material
+export (ShaderMaterial) var border_material = null setget set_border_material
 export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
 export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
 export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
@@ -90,3 +90,4 @@ func set_polygon(polygon):
 func create_inner_polygon():
 	# Subclass Responsibility
 	pass
+

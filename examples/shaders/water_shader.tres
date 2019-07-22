@@ -1,4 +1,5 @@
-[gd_resource type="CanvasItemMaterial" load_steps=2 format=1]
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
 
 [sub_resource type="CanvasItemShaderGraph" id=1]
 
@@ -34,4 +35,3 @@ _data = {
 shader/shader = SubResource( 1 )
 shader/shading_mode = 0
 shader_param/Speed = 0.1
-

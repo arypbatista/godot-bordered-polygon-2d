@@ -115,7 +115,7 @@ func create_inner_polygon():
 	p.set_texture_rotation(get_texture_rotation())
 	p.set_texture_offset(get_texture_offset())
 	p.set_uv(get_uv())
-	p.set_opacity(get_opacity())
+	p.modulate.a = modulate.a
 	p.set_vertex_colors(get_vertex_colors())
 	p.set_material(get_material())
 	set_inner_polygon_node(p)
@@ -252,7 +252,7 @@ func expand_or_contract_shape_points(shape_points, amount, advance=true):
 			for i in range(points_count):
 				output_points.append(point_normals[i] * amount + shape_points[i])
 
-		return Vector2Array(output_points)
+		return PoolVector2Array(output_points)
 
 func add_border(border):
 	borders.add_child(border)
@@ -433,13 +433,13 @@ func update_color_and_opacity():
 		update_polygon_color(border, color, opacity)
 
 func hide_editor_polygon():
-	set_self_opacity(0)
+	self_modulate.a = 0
 
 func calculate_opacity():
 	var current = self
 	var opacity = 1
 	while current != null:
-		opacity *= current.get_opacity()
+		opacity *= current.modulate.a
 		current = current.get_parent()
 		# Leave calculus if parent doesn't have opacity methods
 		if current != null and not current.has_method('get_opacity'):
@@ -450,3 +450,4 @@ func update_polygon_color(polygon, color, opacity=null):
 	if opacity != null:
 		color.a = opacity
 	polygon.set_color(color)
+

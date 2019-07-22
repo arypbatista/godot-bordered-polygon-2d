@@ -11,3 +11,4 @@ func _exit_tree():
     # Clean-up of the plugin goes here
     # Always remember to remove it from the engine when deactivated
     remove_custom_type('BorderedPolygon2D')
+

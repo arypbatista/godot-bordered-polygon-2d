@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=5 format=1]
+[gd_resource type="TileSet" load_steps=1 format=2]
 
 [ext_resource path="res://examples/multiple-borders/directions/tiles/tile000.png" type="Texture" id=1]
 [ext_resource path="res://examples/multiple-borders/directions/tiles/tile002.png" type="Texture" id=2]
@@ -39,4 +39,3 @@
 3/navigation_offset = Vector2( 32, 32 )
 3/shape_offset = Vector2( 0, 0 )
 3/shapes = [  ]
-

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=1]
 [ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=2]
@@ -7,21 +7,22 @@
 
 [node name="MultipleBordersExample" type="Node2D"]
 
+
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
-visibility/self_opacity = 0.0
-polygon = Vector2Array( 128, 192, 288, 192, 288, 352, 128, 352 )
-uv = Vector2Array(  )
+self_modulate = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 128, 192, 288, 192, 288, 352, 128, 352 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = null
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 1 )
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
@@ -40,19 +41,19 @@ smooth_max_angle = 90
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
-visibility/self_opacity = 0.0
-polygon = Vector2Array( 480, 192, 576, 96, 736, 96, 832, 192, 832, 352, 736, 448, 576, 448, 480, 352 )
-uv = Vector2Array(  )
+self_modulate = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 480, 192, 576, 96, 736, 96, 832, 192, 832, 352, 736, 448, 576, 448, 480, 352 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = null
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 1 )
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
@@ -68,5 +69,3 @@ border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
 smooth_level = 0
 smooth_max_angle = 90
-
-

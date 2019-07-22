@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://examples/shaders/water_shader.tres" type="CanvasItemMaterial" id=1]
 [ext_resource path="res://examples/shaders/water.png" type="Texture" id=2]
@@ -15,39 +15,39 @@ __meta__ = {
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
-material/material = ExtResource( 1 )
-transform/pos = Vector2( 44, 4 )
-polygon = Vector2Array( -64, -32, 1080, -32, 1056, 640, -56, 656 )
-uv = Vector2Array(  )
+material = ExtResource( 1 )
+position = Vector2( 44, 4 )
+polygon = PoolVector2Array( -64, -32, 1080, -32, 1056, 640, -56, 656 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 2 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
+texture = ExtResource( 2 )
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
-visibility/self_opacity = 0.0
-transform/pos = Vector2( 4, 3.99999 )
-polygon = Vector2Array( 200, 304, 192, 200, 272, 128, 364, 124, 372, 196, 564, 212, 668, 220, 768, 184, 908, 276, 948, 404, 724, 572, 644, 476, 204, 524 )
-uv = Vector2Array(  )
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 4, 3.99999 )
+polygon = PoolVector2Array( 200, 304, 192, 200, 272, 128, 364, 124, 372, 196, 564, 212, 668, 220, 768, 184, 908, 276, 948, 404, 724, 572, 644, 476, 204, 524 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 3 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 4 )
+texture = ExtResource( 3 )
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true,
 "_editor_icon": ExtResource( 5 )
@@ -67,21 +67,21 @@ smooth_max_angle = 90
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
 
-visibility/self_opacity = 0.0
-material/material = ExtResource( 1 )
-transform/pos = Vector2( 4, 3.99999 )
-polygon = Vector2Array( 788, 420, 684, 412, 644, 380, 500, 388, 436, 388, 388, 364, 436, 316, 524, 308, 732, 276, 820, 300, 844, 364 )
-uv = Vector2Array(  )
+self_modulate = Color( 1, 1, 1, 0 )
+material = ExtResource( 1 )
+position = Vector2( 4, 3.99999 )
+polygon = PoolVector2Array( 788, 420, 684, 412, 644, 380, 500, 388, 436, 388, 388, 364, 436, 316, 524, 308, 732, 276, 820, 300, 844, 364 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 2 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 4 )
+texture = ExtResource( 2 )
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true,
 "_editor_icon": ExtResource( 5 )
@@ -98,5 +98,3 @@ border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 180.0
 smooth_level = 1.0
 smooth_max_angle = 90
-
-

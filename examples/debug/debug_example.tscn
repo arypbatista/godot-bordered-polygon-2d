@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://examples/debug/debug-fill.png" type="Texture" id=1]
 [ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=2]
@@ -7,21 +7,22 @@
 
 [node name="DebugExample" type="Node2D"]
 
+
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
 
-visibility/self_opacity = 0.0
-polygon = Vector2Array( 152, 304, 88, 192, 168, 136, 384, 184, 584.693, 148.301, 638.957, 235.727, 755.023, 265.874, 874.104, 238.742, 976, 440, 680, 472, 328, 448, 280, 328 )
-uv = Vector2Array(  )
+self_modulate = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 152, 304, 88, 192, 168, 136, 384, 184, 584.693, 148.301, 638.957, 235.727, 755.023, 265.874, 874.104, 238.742, 976, 440, 680, 472, 328, 448, 280, 328 )
+uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 0 )
-vertex_colors = ColorArray(  )
+vertex_colors = PoolColorArray(  )
 offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 1 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 2 )
+texture = ExtResource( 1 )
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
@@ -37,5 +38,3 @@ border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 0.0
 smooth_level = 1.0
 smooth_max_angle = 90
-
-

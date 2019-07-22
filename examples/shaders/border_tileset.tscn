@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://examples/shaders/border_shader.tres" type="CanvasItemMaterial" id=1]
 [ext_resource path="res://examples/shaders/sand_transition.png" type="Texture" id=2]
@@ -6,15 +6,14 @@
 
 [node name="BorderTileset" type="Node2D"]
 
+
 [node name="Sprite" type="Sprite" parent="."]
 
-material/material = ExtResource( 1 )
+material = ExtResource( 1 )
 texture = ExtResource( 2 )
 
 [node name="Sprite1" type="Sprite" parent="."]
 
-material/material = ExtResource( 3 )
-transform/pos = Vector2( 452.364, 0.627991 )
+material = ExtResource( 3 )
+position = Vector2( 452.364, 0.627991 )
 texture = ExtResource( 2 )
-
-
