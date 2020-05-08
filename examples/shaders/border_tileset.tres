@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=4 format=1]
+[gd_resource type="TileSet" load_steps=1 format=2]
 
 [ext_resource path="res://examples/shaders/border_shader.tres" type="CanvasItemMaterial" id=1]
 [ext_resource path="res://examples/shaders/sand_transition.png" type="Texture" id=2]
@@ -24,4 +24,3 @@
 1/navigation_offset = Vector2( 128, 128 )
 1/shape_offset = Vector2( 0, 0 )
 1/shapes = [  ]
-

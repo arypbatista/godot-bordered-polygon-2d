@@ -1,37 +1,18 @@
-[gd_resource type="CanvasItemMaterial" load_steps=2 format=1]
-
-[sub_resource type="CanvasItemShaderGraph" id=1]
-
-_code = {
-"fragment": "vec3 nd1sl2=vec3(UV,0);
-vec4 rt_default_tex2=tex(TEXTURE,nd1sl2.xy);
-vec3 nd2sl0=rt_default_tex2.rgb;
-float nd2sl1=rt_default_tex2.a;
-uniform color Color=vec4(0.963713,0.980469,0.444275,1);
-vec3 nd7sl0=Color.rgb;
-float nd7sl1=Color.a;
-float nd4sl0=TIME;
-float nd3sl0=sin(nd4sl0);
-float nd8sl0=abs(nd3sl0);
-float nd9sl0def=1;
-float nd9sl0=nd9sl0def-nd8sl0;
-vec3 nd6sl0=nd7sl0*nd9sl0;
-vec3 nd5sl0=vec3(1.0)-(vec3(1.0)-nd2sl0)*(vec3(1.0)-nd6sl0);
-COLOR.rgb=nd5sl0;
-",
-"fragment_ofs": 0,
-"light": "",
-"light_ofs": 0,
-"vertex": "",
-"vertex_ofs": 0
-}
-_data = {
-"shaders": [ [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ], [ 0, 33, Vector2( 531, 108 ), null, null, [ 0, 5, 0 ], 1, 0, Vector2( -101, 93 ), null, null, [  ], 2, 32, Vector2( 108, 187 ), null, null, [ 0, 1, 2, 2147483647, 0, null ], 3, 14, Vector2( 63, 72 ), 0, null, [ 0, 4, 0, 2147483647, 0, null ], 4, 5, Vector2( 12, 15 ), null, null, [  ], 5, 10, Vector2( 265, 190 ), 0, null, [ 0, 2, 0, 1, 6, 0, 2147483647, 0, null, 2147483647, 1, null ], 6, 9, Vector2( 429, 35 ), 0, null, [ 0, 7, 0, 1, 9, 0, 2147483647, 0, null, 2147483647, 1, null ], 7, 28, Vector2( 115, -58 ), "Color", Color( 0.963713, 0.980469, 0.444275, 1 ), [  ], 8, 14, Vector2( 168, 68.6691 ), 12, null, [ 0, 3, 0, 2147483647, 0, null ], 9, 7, Vector2( 283, 49.6691 ), 1, null, [ 1, 8, 0, 2147483647, 0, 1.0, 2147483647, 1, 0.0 ] ], [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ] ]
-}
+[gd_resource type="Shader" format=2]
 
 [resource]
+code = "shader_type canvas_item;
+uniform vec2 tiled_factor = vec2(2.0,2.0);
+uniform float aspect_ratio = 0.6;
 
-shader/shader = SubResource( 1 )
-shader/shading_mode = 0
-shader_param/Color = Color( 0.963713, 0.980469, 0.444275, 1 )
-
+void fragment() {
+    vec2 tiled_uvs = UV * tiled_factor;
+    tiled_uvs.y *= aspect_ratio;
+    
+    vec2 waves_uv_offset;
+    waves_uv_offset.x = cos(TIME + tiled_uvs.x + tiled_uvs.y) * 0.05;
+    waves_uv_offset.y = sin(TIME + tiled_uvs.x + tiled_uvs.y) * 0.05;
+    
+    COLOR = texture( TEXTURE, tiled_uvs + waves_uv_offset);
+}
+"

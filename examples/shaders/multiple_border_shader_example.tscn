@@ -1,102 +1,66 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://examples/shaders/water_shader.tres" type="CanvasItemMaterial" id=1]
 [ext_resource path="res://examples/shaders/water.png" type="Texture" id=2]
 [ext_resource path="res://examples/shaders/grass.png" type="Texture" id=3]
 [ext_resource path="res://addons/bordered-polygon-2d/bordered_polygon_2d.gd" type="Script" id=4]
 [ext_resource path="res://addons/bordered-polygon-2d/icon.png" type="Texture" id=5]
 [ext_resource path="res://examples/shaders/border_tileset.tres" type="TileSet" id=6]
 
-[node name="MultipleShaderExample" type="Node2D"]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
 
+void fragment() {
+  COLOR = vec4(UV, 0.5, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[node name="MultipleShaderExample" type="Node2D"]
+material = SubResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-
-material/material = ExtResource( 1 )
-transform/pos = Vector2( 44, 4 )
-polygon = Vector2Array( -64, -32, 1080, -32, 1056, 640, -56, 656 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 2 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
+position = Vector2( 44, 4 )
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( -64, -32, 1080, -32, 1056, 640, -56, 656 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="BorderedPolygon2D" type="Polygon2D" parent="."]
-
-visibility/self_opacity = 0.0
-transform/pos = Vector2( 4, 3.99999 )
-polygon = Vector2Array( 200, 304, 192, 200, 272, 128, 364, 124, 372, 196, 564, 212, 668, 220, 768, 184, 908, 276, 948, 404, 724, 572, 644, 476, 204, 524 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 3 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 4 )
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 4, 3.99999 )
+texture = ExtResource( 3 )
+polygon = PoolVector2Array( 200, 304, 192, 200, 272, 128, 364, 124, 372, 196, 564, 212, 668, 220, 768, 184, 908, 276, 948, 404, 724, 572, 644, 476, 204, 524 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true,
 "_editor_icon": ExtResource( 5 )
 }
 border_size = 64
 border_overlap = 16
-border_color = Color( 0, 0, 0, 1 )
 border_textures = ExtResource( 6 )
-border_clockwise_shift = 0
-border_texture = null
-border_material = null
 border_texture_scale = Vector2( 0.25, 0.25 )
-border_texture_offset = Vector2( 0, 0 )
-border_texture_rotation = 0.0
 smooth_level = 1.0
-smooth_max_angle = 90
 
 [node name="BorderedPolygon2D1" type="Polygon2D" parent="."]
-
-visibility/self_opacity = 0.0
-material/material = ExtResource( 1 )
-transform/pos = Vector2( 4, 3.99999 )
-polygon = Vector2Array( 788, 420, 684, 412, 644, 380, 500, 388, 436, 388, 388, 364, 436, 316, 524, 308, 732, 276, 820, 300, 844, 364 )
-uv = Vector2Array(  )
-color = Color( 1, 1, 1, 1 )
-vertex_colors = ColorArray(  )
-offset = Vector2( 0, 0 )
-texture/texture = ExtResource( 2 )
-texture/offset = Vector2( 0, 0 )
-texture/scale = Vector2( 1, 1 )
-texture/rotation = 0.0
-invert/enable = false
-invert/border = 100.0
-script/script = ExtResource( 4 )
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 4, 3.99999 )
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( 788, 420, 684, 412, 644, 380, 500, 388, 436, 388, 388, 364, 436, 316, 524, 308, 732, 276, 820, 300, 844, 364 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true,
 "_editor_icon": ExtResource( 5 )
 }
 border_size = 64
 border_overlap = 16
-border_color = Color( 0, 0, 0, 1 )
 border_textures = ExtResource( 6 )
 border_clockwise_shift = 1
-border_texture = null
-border_material = null
 border_texture_scale = Vector2( 0.25, 0.25 )
-border_texture_offset = Vector2( 0, 0 )
 border_texture_rotation = 180.0
 smooth_level = 1.0
-smooth_max_angle = 90
-
-
