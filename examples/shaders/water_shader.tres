@@ -1,37 +1,23 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform vec2 tiled_factor = vec2(2.0,2.0);
+uniform float aspect_ratio = 0.5;
 
-[sub_resource type="CanvasItemShaderGraph" id=1]
-
-_code = {
-"fragment": "vec3 nd1sl2=vec3(UV,0);
-vec3 nd10sl0=vec3(-0.04,0,0);
-float nd3sl0=TIME;
-uniform float Speed=1;
-float nd7sl0=Speed;
-float nd11sl1def=0.09;
-float nd11sl0=nd3sl0/nd11sl1def;
-float nd8sl0=nd7sl0*nd11sl0;
-float nd5sl0=sin(nd8sl0);
-vec3 nd4sl0=nd10sl0*nd5sl0;
-vec3 nd9sl0=nd4sl0+nd1sl2;
-vec4 rt_default_tex6=tex(TEXTURE,nd9sl0.xy);
-vec3 nd6sl0=rt_default_tex6.rgb;
-float nd6sl1=rt_default_tex6.a;
-COLOR.rgb=nd6sl0;
-",
-"fragment_ofs": 0,
-"light": "",
-"light_ofs": 0,
-"vertex": "",
-"vertex_ofs": 0
+void fragment() {
+    vec2 tiled_uvs = UV * tiled_factor;
+    tiled_uvs.y *= aspect_ratio;
+    
+    vec2 waves_uv_offset;
+    waves_uv_offset.x = cos(TIME + tiled_uvs.x + tiled_uvs.y) * 0.05;
+    waves_uv_offset.y = sin(TIME + tiled_uvs.x + tiled_uvs.y) * 0.05;
+    
+    COLOR = texture( TEXTURE, tiled_uvs + waves_uv_offset);
 }
-_data = {
-"shaders": [ [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ], [ 0, 33, Vector2( 870, 150 ), null, null, [ 0, 6, 0 ], 1, 0, Vector2( 474, 236 ), null, null, [  ], 3, 5, Vector2( -25, 266 ), null, null, [  ], 4, 9, Vector2( 495, 81 ), 0, null, [ 0, 10, 0, 1, 5, 0, 2147483647, 0, null, 2147483647, 1, null ], 5, 14, Vector2( 313, 130 ), 0, null, [ 0, 8, 0, 2147483647, 0, null ], 6, 32, Vector2( 741, 213 ), null, null, [ 0, 9, 0, 2147483647, 0, null ], 7, 26, Vector2( 5, 116.326 ), "Speed", 1.0, [  ], 8, 7, Vector2( 164, 166 ), 2, null, [ 0, 7, 0, 1, 11, 0, 2147483647, 0, null, 2147483647, 1, null ], 9, 8, Vector2( 616, 208 ), 0, null, [ 0, 4, 0, 1, 1, 2, 2147483647, 0, null, 2147483647, 1, null ], 10, 2, Vector2( 288, -38 ), Vector3( -0.04, 0, 0 ), null, [  ], 11, 7, Vector2( 63, 230 ), 3, null, [ 0, 3, 0, 2147483647, 0, 0.0, 2147483647, 1, 0.09 ] ], [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ] ]
-}
+"
 
 [resource]
-
-shader/shader = SubResource( 1 )
-shader/shading_mode = 0
-shader_param/Speed = 0.1
+shader = SubResource( 1 )
+shader_param/tiled_factor = Vector2( 2, 2 )
+shader_param/aspect_ratio = 0.5

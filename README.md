@@ -1,4 +1,4 @@
-# Bordered Polygon2D for Godot Engine
+# Bordered Polygon2D for Godot Engine 3+
 
 Add borders to your Polygon2Ds. Useful for creating maps using textures.
 
