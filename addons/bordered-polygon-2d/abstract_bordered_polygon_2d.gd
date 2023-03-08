@@ -6,9 +6,13 @@ extends Polygon2D
 # Holds the API and exported options.
 #
 
-export(int) var border_size = 50 setget set_border_size
-export(int) var border_overlap = 25 setget set_border_overlap
-export(Color) var border_color = Color(0, 0, 0)
+@export var border_size: int = 50:
+	set = set_border_size
+	
+@export var border_overlap: int = 25:
+	set = set_border_overlap
+	
+@export var border_color: Color = Color(0,0,0)
 
 # You can set a tileset with border textures.
 # Tileset must have 2^n sprites. Sprites textures will be used
@@ -25,67 +29,74 @@ export(Color) var border_color = Color(0, 0, 0)
 #   directions.
 # - Tilesets with 16 sprites will be really smooth.
 # - etcetera...
-export (TileSet) var border_textures = null setget set_border_textures
+@export var border_textures: TileSet  = null:
+	set = set_border_textures
 # Border textures will be rotated clock wise to the left
-export (int) var border_clockwise_shift = 0 setget set_border_clockwise_shift
-
-export (Texture) var border_texture = null setget set_border_texture
-export (ShaderMaterial) var border_material = null setget set_border_material
-export (Vector2) var border_texture_scale = Vector2(1,1) setget set_border_texture_scale
-export (Vector2) var border_texture_offset = Vector2(0,0) setget set_border_texture_offset
-export (float) var border_texture_rotation = 0.0 setget set_border_texture_rotation
-export (float, 0.0, 1.0, 0.1) var smooth_level = 0.0 setget set_smooth_level
-export (int, 0, 179) var smooth_max_angle = 90 setget set_smooth_max_angle
-
+@export var border_clockwise_shift: int = 0:
+	set = set_border_clockwise_shift
+@export var border_texture: Texture2D = null:
+	set = set_border_texture
+@export var border_material: ShaderMaterial = null:
+	set = set_border_material
+@export var border_texture_scale: Vector2 = Vector2.ONE:
+	set = set_border_texture_scale
+@export var border_texture_offset: Vector2 = Vector2.ZERO:
+	set = set_border_texture_offset
+@export var border_texture_rotation: float = 0.0:
+	set = set_border_texture_rotation
+@export_range(0.0, 1.0, 0.1) var smooth_level: float = 0.0:
+	set = set_smooth_level
+@export_range(0, 179) var smooth_max_angle: int = 90:
+	set = set_smooth_max_angle
 
 func set_border_size(value):
 	border_size = value
-	update()
+	queue_redraw()
 
 func set_border_overlap(value):
 	border_overlap = value
-	update()
+	queue_redraw()
 
 func set_border_texture_offset(value):
 	border_texture_offset = value
-	update()
+	queue_redraw()
 
 func set_border_texture_scale(value):
 	border_texture_scale = value
-	update()
+	queue_redraw()
 
 func set_border_texture_rotation(value):
 	border_texture_rotation = value
-	update()
+	queue_redraw()
 
 func set_border_material(value):
 	border_material = value
-	update()
+	queue_redraw()
 
 func set_border_texture(value):
 	border_texture = value
-	update()
+	queue_redraw()
 
 func set_border_textures(value):
 	border_textures = value
-	update()
+	queue_redraw()
 
 func set_border_clockwise_shift(value):
 	border_clockwise_shift = value
-	update()
+	queue_redraw()
 
 func set_smooth_level(value):
 	smooth_level = value
-	update()
+	queue_redraw()
 
 func set_smooth_max_angle(value):
 	smooth_max_angle = value
-	update()
+	queue_redraw()
 
 func set_polygon(polygon):
-	.set_polygon(polygon)
+	super.set_polygon(polygon)
 	create_inner_polygon()
-	update()
+	queue_redraw()
 
 func create_inner_polygon():
 	# Subclass Responsibility
