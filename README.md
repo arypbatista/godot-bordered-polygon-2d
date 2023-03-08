@@ -47,11 +47,6 @@ add_child(bp)
 
 Here `the_poly` is a [PackedVector2Array](https://docs.godotengine.org/en/stable/classes/class_packedvector2array.html) that contains the pixl coordinates of the polygon. This is the same thing you would use in the `set_polygon()` method in the built-in [Polygon2D class](https://docs.godotengine.org/en/stable/classes/class_polygon2d.html#class-polygon2d-property-polygon).
 
-### Examples
-
-Visit the [examples folder](./examples) to see different examples on how to use
-BorderedPolygon2D.
-
 ## Options
 
 There are some options available to customize BorderedPolygon2D:
