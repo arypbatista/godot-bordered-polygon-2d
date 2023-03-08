@@ -1,10 +1,26 @@
-# Bordered Polygon2D for Godot Engine 3+
+# Bordered Polygon2D for Godot 4
 
 Add borders to your Polygon2Ds. Useful for creating maps using textures.
 
+*Note: The base for Bordered Polygon2D has been updated to support Godot 4/ GDScript 2 syntax. Additional tweaks may be needed in the provided examples. This has been tested in Godot 4.0, future versions of Godot 4 may change the GDScript syntax meaning that modifcations may be needed to the .gd files in this package*
+
 ![Preview](./docs/images/preview2.png)
 
-## Usage
+
+# Usage
+
+## Setup
+
+To use this addon in an existing godot project, download this repo as a zip and extract it.
+
+Copy the `addon` folder and paste it inside your [Godot project folder](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/installing_plugins.html#installing-a-plugin).
+
+Finally, go to `project settings > Plugins` and click `enable` under the Bordered Polygon2D plugin. For more information see [Godot's documentation](Bordered Polygon2D).
+
+Once the plugin has been enabled, you can create a bordered polygon either in the scene editor or programmatically. 
+
+
+## Creating a bordered polygon via the scene editor
 
 Create a `BorderedPolygon2D` node in your scene.
 
@@ -18,6 +34,18 @@ You might need to use options to proper align/rotate/scale texture.
 Draw your polygon and voilà!
 
 ![Usage 3](./docs/images/usage3.png)
+
+## Creating a bordered polygon programmatically
+
+To create a bordered polygon programmatically (i.e. in your code), you can use add the following lines of code:
+```
+var bp = BorderedPolygon.new()
+bp.prepare()
+bp.set_polygon(the_poly)
+add_child(bp)
+```
+
+Here `the_poly` is a [PackedVector2Array](https://docs.godotengine.org/en/stable/classes/class_packedvector2array.html) that contains the pixl coordinates of the polygon. This is the same thing you would use in the `set_polygon()` method in the built-in [Polygon2D class](https://docs.godotengine.org/en/stable/classes/class_polygon2d.html#class-polygon2d-property-polygon).
 
 ### Examples
 
