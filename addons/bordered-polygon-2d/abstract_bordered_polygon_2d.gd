@@ -34,7 +34,7 @@ extends Polygon2D
 # Border textures will be rotated clock wise to the left
 @export var border_clockwise_shift: int = 0:
 	set = set_border_clockwise_shift
-@export var border_texture: Texture = null:
+@export var border_texture: Texture2D = null:
 	set = set_border_texture
 @export var border_material: ShaderMaterial = null:
 	set = set_border_material

@@ -3,7 +3,7 @@ extends 'abstract_bordered_polygon_2d.gd'
 class_name BorderedPolygon
 # Authors: Jonathan T. Arnold and Ary Pablo Batista
 
-#!!!!!!!! to make borders work you must turn on repeat on textures
+#!!!!!!!! to make borders work you must turn checked repeat checked textures
 
 const QUAD_TOP_1    = 1
 const QUAD_TOP_2    = 0
